@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkMate — A Multilingual App</title>
+  <style>
+    :root {
+      --bg: #E6EEF7;
+      --text: #111824;
+      --text-body: #263245;
+      --text-muted: #4E5D75;
+      --text-faint: rgba(17, 24, 36, 0.48);
+      --border: rgba(17, 24, 36, 0.15);
+      --surface: rgba(17, 24, 36, 0.04);
+      --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body.is-night-theme {
+      --bg: #101622;
+      --text: #E3ECF8;
+      --text-body: #B9C9DF;
+      --text-muted: #869AB5;
+      --text-faint: rgba(227, 236, 248, 0.45);
+      --border: rgba(227, 236, 248, 0.14);
+      --surface: rgba(227, 236, 248, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.35s ease, color 0.35s ease;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ======================================================================
+       TRAIN SCENE ATMOSPHERE SHADE (GLOW + VIGNETTE + FILM GRAIN)
+       ====================================================================== */
+    .atmosphere-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 30;
+      overflow: hidden;
+    }
+
+    .warm-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 62% 44% at 50% 8%,
+        rgba(116, 174, 250, 0.24) 0%,
+        rgba(133, 184, 250, 0.07) 55%,
+        rgba(17, 24, 36, 0) 100%
+      );
+      transition: opacity 0.4s ease;
+    }
+
+    body.is-night-theme .warm-glow {
+      background: radial-gradient(
+        ellipse 60% 42% at 50% 8%,
+        rgba(86, 148, 240, 0.16) 0%,
+        rgba(38, 74, 140, 0.05) 55%,
+        rgba(10, 14, 24, 0) 100%
+      );
+    }
+
+    .cinematic-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 82% 82% at 50% 50%,
+        rgba(17, 24, 36, 0) 60%,
+        rgba(17, 24, 36, 0.14) 100%
+      );
+    }
+
+    body.is-night-theme .cinematic-vignette {
+      background: radial-gradient(
+        ellipse 80% 80% at 50% 50%,
+        rgba(6, 10, 18, 0) 58%,
+        rgba(6, 10, 18, 0.48) 100%
+      );
+    }
+
+    #grainLayer {
+      position: absolute;
+      inset: 0;
+      opacity: 0.045;
+      background-repeat: repeat;
+      background-size: 128px 128px;
+    }
+
+    /* ======================================================================
+       TOP BAR
+       ====================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 20px 28px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .back-link {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease, transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-link:hover {
+      color: var(--text);
+      transform: translate3d(-2px, 0, 0);
+    }
+
+    .theme-toggle {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      color: var(--text);
+      transform: scale(1.06);
+    }
+
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      display: block;
+    }
+
+    /* ======================================================================
+       MAIN CONTENT
+       ====================================================================== */
+    .case-study {
+      position: relative;
+      z-index: 10;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 20px 28px 96px;
+    }
+
+    /* Simple Single-Line Minimalist Header */
+    .cs-title-line {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.4;
+    }
+
+    .cs-title-name {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .cs-title-rule {
+      flex: 1;
+      height: 1px;
+      min-width: 24px;
+      background-color: var(--border);
+    }
+
+    .cs-title-sub {
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Hero Image First */
+    .hero-frame {
+      width: 100%;
+      margin-bottom: 28px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .hero-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Metadata Strip Below Image */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 20px 0;
+      margin-bottom: 68px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    /* Sections */
+    .cs-section {
+      margin-bottom: 80px;
+    }
+
+    .section-index {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-heading {
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .section-copy {
+      font-size: 15px;
+      color: var(--text-body);
+      max-width: 640px;
+      line-height: 1.72;
+    }
+
+    /* Stats Row */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Problem & Solution Two-Column Split */
+    .two-col-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .two-col-split .section-heading {
+      font-size: 19px;
+    }
+
+    /* Visual Walkthrough (2-col -> Full -> 2-col) */
+    .walkthrough-intro {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    .step-row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .step-row-full {
+      margin-bottom: 56px;
+    }
+
+    .step-figure {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-img-wrap {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #FFFFFF;
+      margin-bottom: 16px;
+    }
+
+    .step-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .step-title {
+      font-family: var(--mono);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 580px;
+    }
+
+    /* Footer */
+    .cs-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      margin-top: 24px;
+    }
+
+    .footer-nav-link {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-nav-link:hover {
+      color: var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      .topbar {
+        padding: 16px 20px;
+      }
+      .case-study {
+        padding: 16px 20px 72px;
+      }
+      .cs-title-line {
+        flex-wrap: wrap;
+        gap: 4px 12px;
+      }
+      .cs-title-rule {
+        display: none;
+      }
+      .cs-title-sub {
+        width: 100%;
+        font-size: 12.5px;
+      }
+      .meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px 16px;
+      }
+      .stats-grid,
+      .two-col-split,
+      .step-row-two {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .cs-section {
+        margin-bottom: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TRAIN-MATCHED ATMOSPHERE SHADE -->
+  <div class="atmosphere-overlay" aria-hidden="true">
+    <div class="warm-glow"></div>
+    <div class="cinematic-vignette"></div>
+    <div id="grainLayer"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="back-link" href="index.html">&larr; back to train</a>
+    <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle Day / Night Theme" title="Switch theme (or press N)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <g id="iconSun">
+          <circle cx="12" cy="12" r="4.2"/>
+          <line x1="12" y1="2.5" x2="12" y2="5.0"/>
+          <line x1="12" y1="19.0" x2="12" y2="21.5"/>
+          <line x1="4.22" y1="4.22" x2="5.98" y2="5.98"/>
+          <line x1="18.02" y1="18.02" x2="19.78" y2="19.78"/>
+          <line x1="2.5" y1="12" x2="5.0" y2="12"/>
+          <line x1="19.0" y1="12" x2="21.5" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.98" y2="18.02"/>
+          <line x1="18.02" y1="5.98" x2="19.78" y2="4.22"/>
+        </g>
+        <g id="iconMoon" style="display: none;">
+          <path d="M20.2 14.8A8.5 8.5 0 0 1 9.2 3.8a8.5 8.5 0 1 0 11 11z"/>
+        </g>
+      </svg>
+    </button>
+  </header>
+
+  <main class="case-study">
+    <!-- SIMPLE SINGLE-LINE TITLE -->
+    <div class="cs-title-line">
+      <h1 class="cs-title-name">WorkMate</h1>
+      <span class="cs-title-rule" aria-hidden="true"></span>
+      <span class="cs-title-sub">A Multilingual App</span>
+    </div>
+
+    <!-- HERO IMAGE ON TOP -->
+    <div class="hero-frame">
+      <img src="images/workmateproject1.png" alt="WorkMate multilingual workforce app preview" />
+    </div>
+
+    <!-- ROLE / TIMELINE / AI'S / DELIVERABLES BELOW IMAGE -->
+    <div class="meta-grid">
+      <div>
+        <div class="meta-label">Role</div>
+        <div class="meta-value">UX Research</div>
+      </div>
+      <div>
+        <div class="meta-label">Timeline</div>
+        <div class="meta-value">Summer 2026</div>
+      </div>
+      <div>
+        <div class="meta-label">AI's</div>
+        <div class="meta-value">Figma Make, Gemini, Claude</div>
+      </div>
+      <div>
+        <div class="meta-label">Deliverables</div>
+        <div class="meta-value">Mobile App, Design System</div>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section class="cs-section">
+      <span class="section-index">Overview</span>
+      <h2 class="section-heading">Bridging the language gap for frontline workers.</h2>
+      <p class="section-copy">
+        WorkMate is a multilingual workforce management app designed to help frontline workers access job-related information, manage daily tasks, and communicate easily in their preferred regional language—eliminating confusion and empowering independent work.
+      </p>
+
+      <div class="stats-grid">
+        <div>
+          <div class="stat-num">-80%</div>
+          <p class="stat-desc">Reduction in routine clarification calls to supervisors.</p>
+        </div>
+        <div>
+          <div class="stat-num">6+</div>
+          <p class="stat-desc">Native regional languages supported with 1-tap switching.</p>
+        </div>
+        <div>
+          <div class="stat-num">Visual</div>
+          <p class="stat-desc">Icon-driven interface designed for varying literacy levels.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM & SOLUTION -->
+    <section class="cs-section">
+      <div class="two-col-split">
+        <div>
+          <span class="section-index">The Problem</span>
+          <h2 class="section-heading">Language barriers &amp; text-heavy portals</h2>
+          <p class="section-copy">
+            Frontline workers often struggle with complex, English-first management portals. This leads to missed tasks, payroll confusion, and a heavy reliance on supervisors to verbally translate and explain daily duties.
+          </p>
+        </div>
+        <div>
+          <span class="section-index">The Solution</span>
+          <h2 class="section-heading">1-Tap localization &amp; visual checklists</h2>
+          <p class="section-copy">
+            An accessible, highly visual mobile interface that allows workers to seamlessly switch to their native language, view icon-supported task lists, and resolve queries without supervisor intervention.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW WE SOLVED IT -->
+    <section class="cs-section">
+      <span class="section-index">How We Solved It</span>
+      <p class="walkthrough-intro">A visual walkthrough of the product experience.</p>
+
+      <!-- Steps 01 & 02 -->
+      <div class="step-row-two">
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/workmate-onboarding1.png" alt="Step 01 Frictionless Onboarding and Language" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">01. Frictionless Onboarding &amp; Language</div>
+            <p class="step-desc">Workers select their native regional language right at launch, instantly localizing the entire app.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/workmate-onboarding2.png" alt="Step 02 Icon-Driven Daily Dashboard" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">02. Icon-Driven Daily Dashboard</div>
+            <p class="step-desc">Text is minimized. Large touch targets and universally recognizable icons guide users through their daily checklist.</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Step 03 -->
+      <div class="step-row-full">
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/workmate-onboarding3.png" alt="Step 03 Components" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">03. Components</div>
+            <p class="step-desc">Some of the most used components in the WorkMate app.</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Steps 04 & 05 -->
+      <div class="step-row-two" style="margin-bottom: 0;">
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/workmate-onboarding4.png" alt="Step 04 Transparent Payroll and Shifts" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">04. Transparent Payroll &amp; Shifts</div>
+            <p class="step-desc">Clear, easy-to-read cards for upcoming shifts and earned wages, reducing anxiety and HR inquiries.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/workmate-onboarding5.png" alt="Step 05 Accessible Design System" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">05. Accessible Design System</div>
+            <p class="step-desc">High-contrast colors (AA compliant), legible typography, and a spacious grid built for diverse user demographics.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- TAKEAWAY -->
+    <section class="cs-section">
+      <span class="section-index">Takeaway</span>
+      <h2 class="section-heading">Clarity over cleverness.</h2>
+      <p class="section-copy">
+        Designing WorkMate was an exercise in extreme empathy. It reinforced that good UI isn't about complex animations or trendy layouts—it's about stripping away cognitive load so anyone, regardless of tech literacy or language, can do their job with confidence.
+      </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="cs-footer">
+      <a class="footer-nav-link" href="index.html">&larr; back to train</a>
+      <a class="footer-nav-link" href="esummit.html">Next: E-Summit '26 &rarr;</a>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const THEME_STORAGE_KEY = 'train-theme-mode';
+      const btn = document.getElementById('themeToggleBtn');
+      const iconSun = document.getElementById('iconSun');
+      const iconMoon = document.getElementById('iconMoon');
+
+      function isNightByClock() {
+        const h = new Date().getHours();
+        return h >= 18 || h < 6;
+      }
+
+      function getSavedTheme() {
+        try { return localStorage.getItem(THEME_STORAGE_KEY); } catch (_) { return null; }
+      }
+
+      function saveTheme(night) {
+        try { localStorage.setItem(THEME_STORAGE_KEY, night ? 'night' : 'day'); } catch (_) {}
+      }
+
+      const saved = getSavedTheme();
+      let isNight = saved === 'night' ? true : saved === 'day' ? false : isNightByClock();
+
+      function applyTheme() {
+        document.body.classList.toggle('is-night-theme', isNight);
+        iconSun.style.display = isNight ? 'none' : 'block';
+        iconMoon.style.display = isNight ? 'block' : 'none';
+      }
+
+      function toggleTheme() {
+        isNight = !isNight;
+        saveTheme(isNight);
+        applyTheme();
+      }
+
+      btn.addEventListener('click', toggleTheme);
+
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'n' || e.key === 'N') {
+          toggleTheme();
+        }
+      });
+
+      applyTheme();
+
+      // Lightweight static 128x128 film grain matching the main train scene
+      const grainLayer = document.getElementById('grainLayer');
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = 128;
+      offCanvas.height = 128;
+      const ctx = offCanvas.getContext('2d');
+      if (ctx && grainLayer) {
+        const imgData = ctx.createImageData(128, 128);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const v = (Math.random() * 255) | 0;
+          data[i] = v;
+          data[i + 1] = v;
+          data[i + 2] = v;
+          data[i + 3] = 255;
+        }
+        ctx.putImageData(imgData, 0, 0);
+        grainLayer.style.backgroundImage = `url(${offCanvas.toDataURL()})`;
+      }
+    })();
+  </script>
+</body>
+</html>

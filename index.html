@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golden Hour Commuter Train — Animated Vector Scene</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body data-speed="slow">
+
+  <!-- MAIN FULL-VIEWPORT ANIMATED VECTOR STAGE -->
+  <div class="viewport-stage" id="sceneContainer">
+    <svg id="commuterTrainSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1470 1050" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="skyWarmGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F7DFB9"/>
+          <stop offset="55%" stop-color="#FCE8BE"/>
+          <stop offset="100%" stop-color="#F5CA7B"/>
+        </linearGradient>
+
+        <linearGradient id="doorWindowSky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F9E8C8"/>
+          <stop offset="65%" stop-color="#E7BA78"/>
+          <stop offset="100%" stop-color="#C88246"/>
+        </linearGradient>
+
+        <linearGradient id="windowShaftSoftGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FFF4C8" stop-opacity="0.44"/>
+          <stop offset="55%" stop-color="#FCE294" stop-opacity="0.26"/>
+          <stop offset="100%" stop-color="#E6A958" stop-opacity="0.02"/>
+        </linearGradient>
+
+        <!-- Small, localized 3.5px blur to soften the hard diagonal sunlight edge on the bench -->
+        <filter id="benchSunSoftBlur" x="-4%" y="-6%" width="108%" height="112%">
+          <feGaussianBlur stdDeviation="3.5" />
+        </filter>
+
+        <linearGradient id="sunlightWallSlash" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F1B875"/>
+          <stop offset="60%" stop-color="#DA8E49"/>
+          <stop offset="100%" stop-color="#A6612A"/>
+        </linearGradient>
+
+        <linearGradient id="benchBackBaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#274640"/>
+          <stop offset="55%" stop-color="#1D3F3B"/>
+          <stop offset="100%" stop-color="#142C2B"/>
+        </linearGradient>
+
+        <linearGradient id="benchCushionBaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#254B44"/>
+          <stop offset="55%" stop-color="#21463F"/>
+          <stop offset="100%" stop-color="#122B2A"/>
+        </linearGradient>
+
+        <linearGradient id="floorBaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4E3A28"/>
+          <stop offset="28%" stop-color="#5E442D"/>
+          <stop offset="62%" stop-color="#4E3A28"/>
+          <stop offset="100%" stop-color="#35261A"/>
+        </linearGradient>
+
+        <linearGradient id="floorDepthGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#261A11" stop-opacity="0.72"/>
+          <stop offset="22%" stop-color="#4E3A28" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#2A1E14" stop-opacity="0.45"/>
+        </linearGradient>
+
+        <linearGradient id="floorSunBeamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#DFB680" stop-opacity="0.52"/>
+          <stop offset="55%" stop-color="#C98F52" stop-opacity="0.38"/>
+          <stop offset="100%" stop-color="#7D5A38" stop-opacity="0.12"/>
+        </linearGradient>
+
+        <!-- Night Scene Gradients -->
+        <linearGradient id="nightSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0B0F24"/>
+          <stop offset="48%" stop-color="#181F42"/>
+          <stop offset="82%" stop-color="#2B2956"/>
+          <stop offset="100%" stop-color="#48365E"/>
+        </linearGradient>
+
+        <linearGradient id="doorNightSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0D122A"/>
+          <stop offset="55%" stop-color="#1E244B"/>
+          <stop offset="85%" stop-color="#352F5B"/>
+          <stop offset="100%" stop-color="#543B60"/>
+        </linearGradient>
+
+        <linearGradient id="horizonCityGlowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FFAE52" stop-opacity="0"/>
+          <stop offset="55%" stop-color="#FF9E44" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="#FF7B29" stop-opacity="0.48"/>
+        </linearGradient>
+
+        <radialGradient id="moonSoftHaloGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF9E6" stop-opacity="0.95"/>
+          <stop offset="28%" stop-color="#FCEBBE" stop-opacity="0.45"/>
+          <stop offset="62%" stop-color="#A8B8F0" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#A8B8F0" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="streetOrbGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF7DC" stop-opacity="1"/>
+          <stop offset="22%" stop-color="#FFCA64" stop-opacity="0.88"/>
+          <stop offset="55%" stop-color="#F5882E" stop-opacity="0.34"/>
+          <stop offset="100%" stop-color="#E06519" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="platformLightGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFFDF0" stop-opacity="0.96"/>
+          <stop offset="30%" stop-color="#FFD885" stop-opacity="0.65"/>
+          <stop offset="70%" stop-color="#E8913A" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#E8913A" stop-opacity="0"/>
+        </radialGradient>
+
+        <linearGradient id="ceilingPanelHaloGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FFD685" stop-opacity="0.42"/>
+          <stop offset="55%" stop-color="#FFD685" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#FFD685" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Soft, radial distance-faded ceiling light washes (40% lower opacity, soft lateral & vertical fade) -->
+        <radialGradient id="ceilingWallWashA" cx="285" cy="18" r="460" fx="285" fy="18" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFE6B0" stop-opacity="0.22"/>
+          <stop offset="35%" stop-color="#F7C26B" stop-opacity="0.10"/>
+          <stop offset="72%" stop-color="#D9933D" stop-opacity="0.03"/>
+          <stop offset="100%" stop-color="#B87328" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="ceilingWallWashB" cx="655" cy="18" r="520" fx="655" fy="18" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFE6B0" stop-opacity="0.24"/>
+          <stop offset="38%" stop-color="#F7C26B" stop-opacity="0.11"/>
+          <stop offset="75%" stop-color="#D9933D" stop-opacity="0.035"/>
+          <stop offset="100%" stop-color="#B87328" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="ceilingWallWashC" cx="1180" cy="18" r="540" fx="1180" fy="18" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFE6B0" stop-opacity="0.23"/>
+          <stop offset="38%" stop-color="#F7C26B" stop-opacity="0.10"/>
+          <stop offset="75%" stop-color="#D9933D" stop-opacity="0.03"/>
+          <stop offset="100%" stop-color="#B87328" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="seatCeilingPoolGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFDF9E" stop-opacity="0.19"/>
+          <stop offset="52%" stop-color="#E5A24B" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#B87328" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="floorCeilingPoolGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFD994" stop-opacity="0.15"/>
+          <stop offset="58%" stop-color="#D6903E" stop-opacity="0.06"/>
+          <stop offset="100%" stop-color="#8C521E" stop-opacity="0"/>
+        </radialGradient>
+
+        <linearGradient id="streetSweepSoftGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#F5A64C" stop-opacity="0"/>
+          <stop offset="25%" stop-color="#FFE19C" stop-opacity="0.26"/>
+          <stop offset="50%" stop-color="#FFE6AD" stop-opacity="0.34"/>
+          <stop offset="75%" stop-color="#F5A64C" stop-opacity="0.20"/>
+          <stop offset="100%" stop-color="#C96B24" stop-opacity="0"/>
+        </linearGradient>
+
+        <clipPath id="mainWindowClip" clipPathUnits="userSpaceOnUse">
+          <rect x="452" y="224" width="770" height="354" rx="22" ry="22"/>
+        </clipPath>
+
+        <clipPath id="doorWindowClip" clipPathUnits="userSpaceOnUse">
+          <rect x="50" y="298" width="121" height="370" rx="20" ry="20"/>
+        </clipPath>
+
+        <!-- Clip path for night ceiling light washes: strictly excludes both windows so light never crosses glass -->
+        <clipPath id="interiorWallSeatFloorClip" clipPathUnits="userSpaceOnUse">
+          <path clip-rule="evenodd" d="
+            M 0,0 L 1470,0 L 1470,1050 L 0,1050 Z
+            M 480,220 L 1196,220 C 1216,220 1226,232 1226,250 L 1226,548 C 1226,570 1212,582 1190,582 L 484,582 C 462,582 448,568 448,546 L 448,250 C 448,232 460,220 480,220 Z
+            M 74,295 L 146,295 C 163,295 174,307 174,324 L 174,642 C 174,660 162,672 145,672 L 74,672 C 57,672 46,659 46,642 L 46,324 C 46,307 57,295 74,295 Z
+          "/>
+        </clipPath>
+
+        <!-- TILE 1: Slow Sky & Clouds (1600px wide, Day & Night separated for sequential fade) -->
+        <g id="tile-1-clouds">
+          <g class="day-scenery">
+            <path d="M 0,242 L 420,235 L 385,308 L 0,316 Z" fill="#FDF2D6" opacity="0.82"/>
+            <path d="M 1180,238 L 1600,242 L 1600,316 L 1140,308 Z" fill="#FDF2D6" opacity="0.82"/>
+            <path d="M 180,240 C 310,234 520,242 660,266 L 630,336 L 160,328 Z" fill="#F6DFB2" opacity="0.85"/>
+            <path d="M 650,230 L 1120,226 L 1080,345 L 615,330 Z" fill="#E4CFA9" opacity="0.65"/>
+            <path d="M 265,296 L 392,288 L 398,314 L 462,312 L 458,334 L 290,337 L 258,318 Z" fill="#78B4C6"/>
+            <path d="M 170,324 L 280,322 L 276,337 L 166,338 Z" fill="#89C0CE"/>
+            <path d="M 645,314 L 782,310 L 786,352 L 640,350 Z" fill="#77B1C4"/>
+            <path d="M 980,292 L 1135,286 L 1142,318 L 974,322 Z" fill="#78B4C6"/>
+            <path d="M 1310,304 L 1465,298 L 1472,332 L 1304,335 Z" fill="#89C0CE"/>
+            <path d="M 310,266 C 380,264 465,268 505,282 L 492,298 L 304,292 Z" fill="#E8CFB0"/>
+            <path d="M 890,262 C 965,258 1065,264 1110,278 L 1096,294 L 884,288 Z" fill="#E8CFB0"/>
+            <path d="M 1250,256 C 1325,252 1415,258 1460,272 L 1446,288 L 1244,282 Z" fill="#F6DFB2" opacity="0.8"/>
+          </g>
+          <g class="night-layer">
+            <path d="M 0,242 L 420,235 L 385,308 L 0,316 Z" fill="#181F44" opacity="0.88"/>
+            <path d="M 1180,238 L 1600,242 L 1600,316 L 1140,308 Z" fill="#181F44" opacity="0.88"/>
+            <path d="M 180,240 C 310,234 520,242 660,266 L 630,336 L 160,328 Z" fill="#1D244E" opacity="0.86"/>
+            <path d="M 650,230 L 1120,226 L 1080,345 L 615,330 Z" fill="#161C3D" opacity="0.78"/>
+            <path d="M 265,296 L 392,288 L 398,314 L 462,312 L 458,334 L 290,337 L 258,318 Z" fill="#283166" opacity="0.85"/>
+            <path d="M 645,314 L 782,310 L 786,352 L 640,350 Z" fill="#252E60" opacity="0.85"/>
+            <path d="M 980,292 L 1135,286 L 1142,318 L 974,322 Z" fill="#283166" opacity="0.85"/>
+            <path d="M 1310,304 L 1465,298 L 1472,332 L 1304,335 Z" fill="#2B346B" opacity="0.85"/>
+          </g>
+        </g>
+
+        <!-- TILE 2: Distant Mountain & City Horizon Haze (1600px wide) -->
+        <g id="tile-2-distant">
+          <g class="day-scenery">
+            <path d="M 0,345 L 125,334 L 195,356 L 320,352 L 395,328 L 515,332 L 580,358 L 735,348 L 830,326 L 965,330 L 1040,356 L 1185,340 L 1290,328 L 1410,334 L 1495,352 L 1600,345 L 1600,485 L 0,485 Z" fill="#A49576"/>
+            <path d="M 0,372 L 155,366 L 225,395 L 410,386 L 490,362 L 650,368 L 745,396 L 915,380 L 1025,362 L 1175,374 L 1310,392 L 1445,368 L 1600,372 L 1600,485 L 0,485 Z" fill="#8E8168"/>
+          </g>
+          <g class="night-layer">
+            <rect x="0" y="295" width="1600" height="115" fill="url(#horizonCityGlowGrad)"/>
+            <path d="M 0,345 L 125,334 L 195,356 L 320,352 L 395,328 L 515,332 L 580,358 L 735,348 L 830,326 L 965,330 L 1040,356 L 1185,340 L 1290,328 L 1410,334 L 1495,352 L 1600,345 L 1600,485 L 0,485 Z" fill="#181C38"/>
+            <path d="M 0,372 L 155,366 L 225,395 L 410,386 L 490,362 L 650,368 L 745,396 L 915,380 L 1025,362 L 1175,374 L 1310,392 L 1445,368 L 1600,372 L 1600,485 L 0,485 Z" fill="#12152B"/>
+            <g fill="#FFCF7C" opacity="0.78">
+              <rect x="75" y="382" width="4" height="2"/><rect x="92" y="384" width="3" height="2"/><rect x="140" y="378" width="5" height="2"/>
+              <rect x="255" y="396" width="4" height="2"/><rect x="280" y="394" width="6" height="2"/><rect x="350" y="388" width="4" height="2"/>
+              <rect x="525" y="374" width="5" height="2"/><rect x="548" y="378" width="3" height="2"/><rect x="610" y="375" width="4" height="2"/>
+              <rect x="780" y="395" width="5" height="2"/><rect x="815" y="390" width="4" height="2"/><rect x="885" y="384" width="6" height="2"/>
+              <rect x="1065" y="374" width="4" height="2"/><rect x="1110" y="378" width="5" height="2"/><rect x="1220" y="386" width="4" height="2"/>
+              <rect x="1395" y="382" width="5" height="2"/><rect x="1480" y="376" width="4" height="2"/><rect x="1535" y="380" width="5" height="2"/>
+            </g>
+          </g>
+        </g>
+        <!-- TILE 3: Midground Buildings, Towers & Foliage (1600px wide, Day & Night separated) -->
+        <g id="tile-3-midground">
+          <g class="day-scenery">
+            <path d="M 0,448 C 55,432 125,442 175,468 C 215,448 265,458 295,485 L 295,578 L 0,578 Z" fill="#C49D48"/>
+            <path d="M 225,352 L 292,352 L 294,492 L 223,492 Z" fill="#DFC38B"/>
+            <path d="M 225,352 L 245,352 L 245,492 L 225,492 Z" fill="#C7A76C"/>
+            <g fill="#A88952">
+              <rect x="254" y="368" width="10" height="12"/><rect x="272" y="368" width="10" height="12"/>
+              <rect x="254" y="390" width="10" height="12"/><rect x="272" y="390" width="10" height="12"/>
+              <rect x="254" y="412" width="10" height="12"/><rect x="272" y="412" width="10" height="12"/>
+            </g>
+            <path d="M 304,334 L 392,334 L 394,488 L 302,488 Z" fill="#E0B68F"/>
+            <path d="M 342,312 L 386,312 L 386,336 L 342,336 Z" fill="#D5A67E"/>
+            <path d="M 304,376 L 346,376 L 346,488 L 304,488 Z" fill="#CF9F76"/>
+            <path d="M 418,238 L 558,238 L 560,488 L 416,488 Z" fill="#E7CCB2"/>
+            <path d="M 418,238 L 452,238 L 452,488 L 418,488 Z" fill="#D3B193"/>
+            <g fill="#9F6B53">
+              <rect x="464" y="256" width="28" height="11" rx="2"/>
+              <rect x="464" y="288" width="22" height="10" rx="1"/><rect x="502" y="288" width="24" height="10" rx="1"/>
+              <rect x="464" y="312" width="22" height="10" rx="1"/><rect x="502" y="312" width="24" height="10" rx="1"/>
+              <rect x="464" y="336" width="22" height="10" rx="1"/><rect x="502" y="336" width="24" height="10" rx="1"/>
+              <rect x="464" y="360" width="22" height="10" rx="1"/><rect x="502" y="360" width="24" height="10" rx="1"/>
+              <rect x="464" y="384" width="22" height="10" rx="1"/><rect x="502" y="384" width="24" height="10" rx="1"/>
+            </g>
+            <path d="M 545,456 C 595,436 665,442 725,472 L 775,472 L 775,578 L 535,578 Z" fill="#9E8B44"/>
+            <path d="M 765,264 L 878,264 L 878,475 L 765,475 Z" fill="#B5A388"/>
+            <path d="M 818,244 L 936,244 L 936,475 L 818,475 Z" fill="#9A8B72"/>
+            <g fill="#7A6B56">
+              <rect x="836" y="266" width="18" height="10"/><rect x="866" y="266" width="18" height="10"/><rect x="896" y="266" width="18" height="10"/>
+              <rect x="836" y="290" width="18" height="10"/><rect x="866" y="290" width="18" height="10"/><rect x="896" y="290" width="18" height="10"/>
+              <rect x="836" y="314" width="18" height="10"/><rect x="866" y="314" width="18" height="10"/><rect x="896" y="314" width="18" height="10"/>
+            </g>
+            <path d="M 1020,368 L 1118,368 L 1118,482 L 1020,482 Z" fill="#DFC38B"/>
+            <path d="M 1020,368 L 1046,368 L 1046,482 L 1020,482 Z" fill="#C7A76C"/>
+            <path d="M 735,455 C 755,405 798,378 845,378 C 872,348 935,348 978,372 C 1028,342 1102,355 1145,392 C 1195,372 1265,388 1315,425 L 1315,578 L 725,578 Z" fill="#7D8062"/>
+            <path d="M 775,485 C 798,430 865,410 925,422 C 975,395 1058,405 1120,436 C 1185,418 1265,432 1335,468 L 1335,578 L 765,578 Z" fill="#636A4F"/>
+            <path d="M 1265,252 L 1392,252 L 1394,485 L 1263,485 Z" fill="#DFB896"/>
+            <path d="M 1265,252 L 1298,252 L 1298,485 L 1265,485 Z" fill="#C99E7A"/>
+            <g fill="#9A684D">
+              <rect x="1312" y="274" width="20" height="10"/><rect x="1346" y="274" width="22" height="10"/>
+              <rect x="1312" y="298" width="20" height="10"/><rect x="1346" y="298" width="22" height="10"/>
+              <rect x="1312" y="322" width="20" height="10"/><rect x="1346" y="322" width="22" height="10"/>
+              <rect x="1312" y="346" width="20" height="10"/><rect x="1346" y="346" width="22" height="10"/>
+            </g>
+            <path d="M 1320,455 C 1375,432 1445,438 1505,462 C 1545,448 1575,444 1600,448 L 1600,578 L 1310,578 Z" fill="#C49D48"/>
+          </g>
+
+          <g class="night-layer">
+            <path d="M 0,448 C 55,432 125,442 175,468 C 215,448 265,458 295,485 L 295,578 L 0,578 Z" fill="#0E1326"/>
+            <path d="M 225,352 L 292,352 L 294,492 L 223,492 Z" fill="#141931"/>
+            <path d="M 225,352 L 245,352 L 245,492 L 225,492 Z" fill="#0E1225"/>
+            <path d="M 304,334 L 392,334 L 394,488 L 302,488 Z" fill="#171C36"/>
+            <path d="M 342,312 L 386,312 L 386,336 L 342,336 Z" fill="#12162C"/>
+            <path d="M 304,376 L 346,376 L 346,488 L 304,488 Z" fill="#101429"/>
+            <g fill="#FFD882">
+              <rect x="254" y="368" width="10" height="12" rx="1"/>
+              <rect x="272" y="390" width="10" height="12" rx="1" fill="#FFEAB3"/>
+              <rect x="254" y="412" width="10" height="12" rx="1"/>
+              <rect x="272" y="434" width="10" height="12" rx="1" fill="#F5B35D"/>
+              <rect x="356" y="352" width="11" height="12" rx="1" fill="#FFEAB3"/>
+              <rect x="372" y="352" width="11" height="12" rx="1"/>
+              <rect x="356" y="378" width="11" height="12" rx="1"/>
+              <rect x="372" y="404" width="11" height="12" rx="1" fill="#F5B35D"/>
+              <rect x="318" y="396" width="12" height="10" rx="1"/>
+              <rect x="318" y="422" width="12" height="10" rx="1" fill="#FFEAB3"/>
+            </g>
+            <path d="M 418,238 L 558,238 L 560,488 L 416,488 Z" fill="#151A33"/>
+            <path d="M 418,238 L 452,238 L 452,488 L 418,488 Z" fill="#0E1224"/>
+            <circle cx="435" cy="236" r="2.5" fill="#FF4D4D"/>
+            <circle cx="542" cy="236" r="2.5" fill="#FF4D4D"/>
+            <g fill="#FFE094">
+              <rect x="464" y="256" width="28" height="11" rx="1.5" fill="#FFF0C2"/>
+              <rect x="502" y="288" width="24" height="10" rx="1"/>
+              <rect x="464" y="312" width="22" height="10" rx="1" fill="#F7B963"/>
+              <rect x="502" y="312" width="24" height="10" rx="1" fill="#FFF0C2"/>
+              <rect x="464" y="336" width="22" height="10" rx="1"/>
+              <rect x="502" y="360" width="24" height="10" rx="1"/>
+              <rect x="464" y="384" width="22" height="10" rx="1" fill="#FFF0C2"/>
+              <rect x="502" y="384" width="24" height="10" rx="1" fill="#F7B963"/>
+              <rect x="464" y="408" width="22" height="10" rx="1"/>
+              <rect x="502" y="432" width="24" height="10" rx="1" fill="#FFF0C2"/>
+            </g>
+            <path d="M 545,456 C 595,436 665,442 725,472 L 775,472 L 775,578 L 535,578 Z" fill="#0F1428"/>
+            <path d="M 765,264 L 878,264 L 878,475 L 765,475 Z" fill="#13182E"/>
+            <path d="M 818,244 L 936,244 L 936,475 L 818,475 Z" fill="#171D38"/>
+            <g fill="#FFD984">
+              <rect x="780" y="284" width="16" height="9" rx="1"/>
+              <rect x="780" y="308" width="16" height="9" rx="1" fill="#FFF1C4"/>
+              <rect x="780" y="356" width="16" height="9" rx="1"/>
+              <rect x="836" y="266" width="18" height="10" rx="1" fill="#FFF1C4"/>
+              <rect x="896" y="266" width="18" height="10" rx="1"/>
+              <rect x="866" y="290" width="18" height="10" rx="1"/>
+              <rect x="896" y="290" width="18" height="10" rx="1" fill="#F5B258"/>
+              <rect x="836" y="314" width="18" height="10" rx="1"/>
+              <rect x="866" y="314" width="18" height="10" rx="1" fill="#FFF1C4"/>
+              <rect x="836" y="338" width="18" height="10" rx="1" fill="#F5B258"/>
+              <rect x="896" y="338" width="18" height="10" rx="1"/>
+            </g>
+            <path d="M 1020,368 L 1118,368 L 1118,482 L 1020,482 Z" fill="#151B34"/>
+            <rect x="1062" y="388" width="14" height="12" rx="1" fill="#FFE299"/>
+            <rect x="1086" y="388" width="14" height="12" rx="1" fill="#F5B258"/>
+            <path d="M 735,455 C 755,405 798,378 845,378 C 872,348 935,348 978,372 C 1028,342 1102,355 1145,392 C 1195,372 1265,388 1315,425 L 1315,578 L 725,578 Z" fill="#0D1224"/>
+            <path d="M 775,485 C 798,430 865,410 925,422 C 975,395 1058,405 1120,436 C 1185,418 1265,432 1335,468 L 1335,578 L 765,578 Z" fill="#090D1C"/>
+            <path d="M 1265,252 L 1392,252 L 1394,485 L 1263,485 Z" fill="#151A34"/>
+            <path d="M 1265,252 L 1298,252 L 1298,485 L 1265,485 Z" fill="#0F1326"/>
+            <circle cx="1378" cy="250" r="2.5" fill="#FF4D4D"/>
+            <g fill="#FFE296">
+              <rect x="1312" y="274" width="20" height="10" rx="1"/>
+              <rect x="1346" y="298" width="22" height="10" rx="1" fill="#FFF0C4"/>
+              <rect x="1312" y="322" width="20" height="10" rx="1" fill="#F5B258"/>
+              <rect x="1346" y="322" width="22" height="10" rx="1"/>
+              <rect x="1312" y="346" width="20" height="10" rx="1" fill="#FFF0C4"/>
+              <rect x="1346" y="370" width="22" height="10" rx="1"/>
+              <rect x="1312" y="394" width="20" height="10" rx="1"/>
+            </g>
+            <path d="M 1320,455 C 1375,432 1445,438 1505,462 C 1545,448 1575,444 1600,448 L 1600,578 L 1310,578 Z" fill="#0E1326"/>
+          </g>
+        </g>
+
+        <!-- TILE 4: Fast Closer Rooftops & Guardrail (1600px wide, Day & Night separated) -->
+        <g id="tile-4-rooftops-guardrail">
+          <g class="day-scenery">
+            <path d="M 90,462 L 285,462 L 285,578 L 90,578 Z" fill="#BA8149"/>
+            <path d="M 140,462 L 295,462 L 295,578 L 140,578 Z" fill="#9C6B3E"/>
+            <rect x="175" y="494" width="12" height="16" fill="#FCE5A2"/>
+            <rect x="196" y="494" width="12" height="16" fill="#FCE5A2"/>
+            <rect x="218" y="494" width="10" height="16" fill="#E3B968"/>
+            <path d="M 620,454 L 830,454 L 830,578 L 620,578 Z" fill="#B57B43"/>
+            <path d="M 675,454 L 840,454 L 840,578 L 675,578 Z" fill="#946336"/>
+            <rect x="710" y="492" width="12" height="16" fill="#FCE5A2"/>
+            <rect x="732" y="492" width="12" height="16" fill="#E3B968"/>
+            <path d="M 1160,458 L 1370,458 L 1370,578 L 1160,578 Z" fill="#BA8149"/>
+            <path d="M 1215,458 L 1380,458 L 1380,578 L 1215,578 Z" fill="#9C6B3E"/>
+            <rect x="1250" y="492" width="12" height="16" fill="#FCE5A2"/>
+            <rect x="1274" y="492" width="12" height="16" fill="#FCE5A2"/>
+            <rect x="0" y="479" width="1600" height="10" fill="#8C7454"/>
+            <rect x="0" y="479" width="1600" height="4" fill="#F3C979"/>
+            <rect x="0" y="539" width="1600" height="16" fill="#6D583F"/>
+            <g fill="#7A6548">
+              <rect x="20" y="483" width="8" height="72"/><rect x="70" y="483" width="8" height="72"/>
+              <rect x="120" y="483" width="8" height="72"/><rect x="170" y="483" width="8" height="72"/>
+              <rect x="220" y="483" width="8" height="72"/><rect x="270" y="483" width="8" height="72"/>
+              <rect x="320" y="483" width="8" height="72"/><rect x="370" y="483" width="8" height="72"/>
+              <rect x="420" y="483" width="8" height="72"/><rect x="470" y="483" width="8" height="72"/>
+              <rect x="520" y="483" width="8" height="72"/><rect x="570" y="483" width="8" height="72"/>
+              <rect x="620" y="483" width="8" height="72"/><rect x="670" y="483" width="8" height="72"/>
+              <rect x="720" y="483" width="8" height="72"/><rect x="770" y="483" width="8" height="72"/>
+              <rect x="820" y="483" width="8" height="72"/><rect x="870" y="483" width="8" height="72"/>
+              <rect x="920" y="483" width="8" height="72"/><rect x="970" y="483" width="8" height="72"/>
+              <rect x="1020" y="483" width="8" height="72"/><rect x="1070" y="483" width="8" height="72"/>
+              <rect x="1120" y="483" width="8" height="72"/><rect x="1170" y="483" width="8" height="72"/>
+              <rect x="1220" y="483" width="8" height="72"/><rect x="1270" y="483" width="8" height="72"/>
+              <rect x="1320" y="483" width="8" height="72"/><rect x="1370" y="483" width="8" height="72"/>
+              <rect x="1420" y="483" width="8" height="72"/><rect x="1470" y="483" width="8" height="72"/>
+              <rect x="1520" y="483" width="8" height="72"/><rect x="1570" y="483" width="8" height="72"/>
+            </g>
+          </g>
+          <g class="night-layer">
+            <path d="M 90,462 L 295,462 L 295,578 L 90,578 Z" fill="#0B0F1F"/>
+            <rect x="175" y="494" width="12" height="16" rx="1" fill="#FFE69E"/>
+            <rect x="196" y="494" width="12" height="16" rx="1" fill="#FFC966"/>
+            <rect x="218" y="494" width="10" height="16" rx="1" fill="#FFE69E"/>
+            <path d="M 620,454 L 840,454 L 840,578 L 620,578 Z" fill="#0B0F1F"/>
+            <rect x="710" y="492" width="12" height="16" rx="1" fill="#FFE69E"/>
+            <rect x="732" y="492" width="12" height="16" rx="1" fill="#FFC966"/>
+            <path d="M 1160,458 L 1380,458 L 1380,578 L 1160,578 Z" fill="#0B0F1F"/>
+            <rect x="1250" y="492" width="12" height="16" rx="1" fill="#FFE69E"/>
+            <rect x="1274" y="492" width="12" height="16" rx="1" fill="#FFE69E"/>
+            <g>
+              <rect x="438" y="438" width="5" height="44" fill="#182038"/>
+              <ellipse cx="440" cy="436" rx="46" ry="28" fill="url(#platformLightGlowGrad)"/>
+              <ellipse cx="440" cy="436" rx="12" ry="6" fill="#FFFDF0"/>
+              <rect x="978" y="436" width="5" height="46" fill="#182038"/>
+              <ellipse cx="980" cy="434" rx="50" ry="30" fill="url(#platformLightGlowGrad)"/>
+              <ellipse cx="980" cy="434" rx="13" ry="6" fill="#FFFDF0"/>
+              <rect x="1488" y="438" width="5" height="44" fill="#182038"/>
+              <ellipse cx="1490" cy="436" rx="46" ry="28" fill="url(#platformLightGlowGrad)"/>
+              <ellipse cx="1490" cy="436" rx="12" ry="6" fill="#FFFDF0"/>
+            </g>
+            <rect x="0" y="479" width="1600" height="10" fill="#151B30"/>
+            <rect x="0" y="479" width="1600" height="2.5" fill="#5D6B99" opacity="0.65"/>
+            <rect x="0" y="539" width="1600" height="16" fill="#0E1222"/>
+            <g fill="#12172A">
+              <rect x="20" y="483" width="8" height="72"/><rect x="70" y="483" width="8" height="72"/>
+              <rect x="120" y="483" width="8" height="72"/><rect x="170" y="483" width="8" height="72"/>
+              <rect x="220" y="483" width="8" height="72"/><rect x="270" y="483" width="8" height="72"/>
+              <rect x="320" y="483" width="8" height="72"/><rect x="370" y="483" width="8" height="72"/>
+              <rect x="420" y="483" width="8" height="72"/><rect x="470" y="483" width="8" height="72"/>
+              <rect x="520" y="483" width="8" height="72"/><rect x="570" y="483" width="8" height="72"/>
+              <rect x="620" y="483" width="8" height="72"/><rect x="670" y="483" width="8" height="72"/>
+              <rect x="720" y="483" width="8" height="72"/><rect x="770" y="483" width="8" height="72"/>
+              <rect x="820" y="483" width="8" height="72"/><rect x="870" y="483" width="8" height="72"/>
+              <rect x="920" y="483" width="8" height="72"/><rect x="970" y="483" width="8" height="72"/>
+              <rect x="1020" y="483" width="8" height="72"/><rect x="1070" y="483" width="8" height="72"/>
+              <rect x="1120" y="483" width="8" height="72"/><rect x="1170" y="483" width="8" height="72"/>
+              <rect x="1220" y="483" width="8" height="72"/><rect x="1270" y="483" width="8" height="72"/>
+              <rect x="1320" y="483" width="8" height="72"/><rect x="1370" y="483" width="8" height="72"/>
+              <rect x="1420" y="483" width="8" height="72"/><rect x="1470" y="483" width="8" height="72"/>
+              <rect x="1520" y="483" width="8" height="72"/><rect x="1570" y="483" width="8" height="72"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- TILE 5: Utility Poles & Sagging Catenary Wires (1600px wide) -->
+        <g id="tile-5-poles-wires">
+          <g class="catenary-wire-group">
+            <path d="M 0,252 Q 160,274 320,248 Q 720,296 1120,248 Q 1360,274 1600,252" fill="none" stroke="#8C7B65" stroke-width="2.8"/>
+            <path d="M 0,268 Q 160,290 320,262 Q 720,314 1120,262 Q 1360,290 1600,268" fill="none" stroke="#9F8E77" stroke-width="2.1"/>
+            <path d="M 0,238 L 1600,238" fill="none" stroke="#756A58" stroke-width="1.8" opacity="0.8"/>
+          </g>
+          <g class="day-scenery">
+            <rect x="314" y="224" width="15" height="352" fill="#6F6756"/>
+            <rect x="314" y="224" width="5" height="352" fill="#9E8D6C"/>
+            <rect x="294" y="246" width="48" height="7" fill="#5D5948"/>
+            <rect x="1114" y="224" width="15" height="352" fill="#5D5948"/>
+            <rect x="1114" y="224" width="5" height="352" fill="#8E7E60"/>
+            <rect x="1090" y="246" width="54" height="8" fill="#5D5948"/>
+            <rect x="1084" y="282" width="64" height="7" fill="#5D5948"/>
+          </g>
+          <g class="night-layer">
+            <rect x="314" y="224" width="15" height="352" fill="#0B0E1B"/>
+            <rect x="294" y="246" width="48" height="7" fill="#0B0E1B"/>
+            <path d="M 326,358 L 366,348" stroke="#151B30" stroke-width="4.5" stroke-linecap="round"/>
+            <circle cx="372" cy="348" r="68" fill="url(#streetOrbGlowGrad)"/>
+            <ellipse cx="372" cy="348" rx="22" ry="10" fill="#FFE6A3" opacity="0.9"/>
+            <circle cx="372" cy="348" r="8" fill="#FFFDF5"/>
+            <rect x="1114" y="224" width="15" height="352" fill="#0B0E1B"/>
+            <rect x="1090" y="246" width="54" height="8" fill="#0B0E1B"/>
+            <rect x="1084" y="282" width="64" height="7" fill="#0B0E1B"/>
+            <path d="M 1126,354 L 1168,344" stroke="#151B30" stroke-width="4.5" stroke-linecap="round"/>
+            <circle cx="1174" cy="344" r="72" fill="url(#streetOrbGlowGrad)"/>
+            <ellipse cx="1174" cy="344" rx="24" ry="11" fill="#FFE6A3" opacity="0.9"/>
+            <circle cx="1174" cy="344" r="8.5" fill="#FFFDF5"/>
+          </g>
+        </g>
+
+        <!-- LEFT DOOR WINDOW TILES (600px wide, Day & Night separated) -->
+        <g id="door-tile-distant">
+          <g class="day-scenery">
+            <path d="M 0,395 L 135,382 L 265,412 L 410,368 L 520,402 L 600,395 L 600,540 L 0,540 Z" fill="#B9A68E"/>
+            <path d="M 55,418 L 210,418 L 210,540 L 55,540 Z" fill="#9A8872"/>
+            <path d="M 275,358 L 415,358 L 415,555 L 275,555 Z" fill="#8B7258"/>
+            <path d="M 455,388 L 575,388 L 575,540 L 455,540 Z" fill="#9A8872"/>
+          </g>
+          <g class="night-layer">
+            <rect x="0" y="340" width="600" height="100" fill="url(#horizonCityGlowGrad)"/>
+            <path d="M 0,395 L 135,382 L 265,412 L 410,368 L 520,402 L 600,395 L 600,540 L 0,540 Z" fill="#171B36"/>
+            <path d="M 55,418 L 210,418 L 210,540 L 55,540 Z" fill="#13172E"/>
+            <path d="M 275,358 L 415,358 L 415,555 L 275,555 Z" fill="#101429"/>
+            <path d="M 455,388 L 575,388 L 575,540 L 455,540 Z" fill="#13172E"/>
+            <g fill="#FFE094">
+              <rect x="85" y="438" width="8" height="10" rx="1"/>
+              <rect x="115" y="458" width="8" height="10" rx="1"/>
+              <rect x="305" y="382" width="10" height="11" rx="1" fill="#FFF0C4"/>
+              <rect x="335" y="382" width="10" height="11" rx="1"/>
+              <rect x="305" y="410" width="10" height="11" rx="1"/>
+              <rect x="365" y="410" width="10" height="11" rx="1" fill="#F5B258"/>
+              <rect x="488" y="415" width="9" height="10" rx="1"/>
+              <rect x="518" y="438" width="9" height="10" rx="1" fill="#FFF0C4"/>
+            </g>
+          </g>
+        </g>
+
+        <g id="door-tile-mid">
+          <g class="day-scenery">
+            <rect x="0" y="535" width="600" height="133" fill="#D58D49"/>
+            <rect x="28" y="562" width="115" height="106" fill="#C27435"/>
+            <rect x="195" y="548" width="95" height="120" fill="#B86B2E"/>
+            <rect x="335" y="566" width="135" height="102" fill="#C27435"/>
+            <rect x="505" y="554" width="75" height="114" fill="#B86B2E"/>
+            <g fill="#7A441E">
+              <rect x="46" y="582" width="10" height="16"/><rect x="70" y="582" width="10" height="16"/><rect x="94" y="582" width="10" height="16"/>
+              <rect x="46" y="612" width="10" height="18"/><rect x="70" y="612" width="10" height="18"/><rect x="94" y="612" width="10" height="18"/>
+              <rect x="215" y="572" width="10" height="16"/><rect x="242" y="572" width="10" height="16"/>
+              <rect x="358" y="592" width="10" height="16"/><rect x="382" y="592" width="10" height="16"/><rect x="406" y="592" width="10" height="16"/>
+              <rect x="525" y="582" width="10" height="16"/><rect x="548" y="582" width="10" height="16"/>
+            </g>
+          </g>
+          <g class="night-layer">
+            <rect x="0" y="535" width="600" height="133" fill="#0B0E1D"/>
+            <rect x="28" y="562" width="115" height="106" fill="#0E1326"/>
+            <rect x="195" y="548" width="95" height="120" fill="#0C1022"/>
+            <rect x="335" y="566" width="135" height="102" fill="#0E1326"/>
+            <rect x="505" y="554" width="75" height="114" fill="#0C1022"/>
+            <g fill="#FFE296">
+              <rect x="46" y="582" width="10" height="16" rx="1"/>
+              <rect x="94" y="582" width="10" height="16" rx="1" fill="#FFF0C4"/>
+              <rect x="70" y="612" width="10" height="18" rx="1" fill="#F5B258"/>
+              <rect x="215" y="572" width="10" height="16" rx="1" fill="#FFF0C4"/>
+              <rect x="358" y="592" width="10" height="16" rx="1"/>
+              <rect x="406" y="592" width="10" height="16" rx="1" fill="#F5B258"/>
+              <rect x="525" y="582" width="10" height="16" rx="1" fill="#FFF0C4"/>
+            </g>
+          </g>
+        </g>
+
+        <g id="door-tile-guardrail">
+          <g class="day-scenery">
+            <rect x="0" y="482" width="600" height="5" fill="#6F5B45"/>
+            <rect x="0" y="528" width="600" height="8" fill="#5D4A36"/>
+            <g fill="#6F5B45">
+              <rect x="16" y="484" width="6" height="46"/><rect x="56" y="484" width="6" height="46"/>
+              <rect x="96" y="484" width="6" height="46"/><rect x="136" y="484" width="6" height="46"/>
+              <rect x="176" y="484" width="6" height="46"/><rect x="216" y="484" width="6" height="46"/>
+              <rect x="256" y="484" width="6" height="46"/><rect x="296" y="484" width="6" height="46"/>
+              <rect x="336" y="484" width="6" height="46"/><rect x="376" y="484" width="6" height="46"/>
+              <rect x="416" y="484" width="6" height="46"/><rect x="456" y="484" width="6" height="46"/>
+              <rect x="496" y="484" width="6" height="46"/><rect x="536" y="484" width="6" height="46"/>
+              <rect x="576" y="484" width="6" height="46"/>
+            </g>
+          </g>
+          <g class="night-layer">
+            <ellipse cx="220" cy="468" rx="38" ry="22" fill="url(#platformLightGlowGrad)"/>
+            <circle cx="220" cy="468" r="6" fill="#FFFDF0"/>
+            <ellipse cx="520" cy="468" rx="38" ry="22" fill="url(#platformLightGlowGrad)"/>
+            <circle cx="520" cy="468" r="6" fill="#FFFDF0"/>
+            <rect x="0" y="482" width="600" height="5" fill="#151B30"/>
+            <rect x="0" y="528" width="600" height="8" fill="#0E1222"/>
+            <g fill="#12172A">
+              <rect x="16" y="484" width="6" height="46"/><rect x="56" y="484" width="6" height="46"/>
+              <rect x="96" y="484" width="6" height="46"/><rect x="136" y="484" width="6" height="46"/>
+              <rect x="176" y="484" width="6" height="46"/><rect x="216" y="484" width="6" height="46"/>
+              <rect x="256" y="484" width="6" height="46"/><rect x="296" y="484" width="6" height="46"/>
+              <rect x="336" y="484" width="6" height="46"/><rect x="376" y="484" width="6" height="46"/>
+              <rect x="416" y="484" width="6" height="46"/><rect x="456" y="484" width="6" height="46"/>
+              <rect x="496" y="484" width="6" height="46"/><rect x="536" y="484" width="6" height="46"/>
+              <rect x="576" y="484" width="6" height="46"/>
+            </g>
+          </g>
+        </g>
+
+        <g id="door-tile-poles">
+          <path d="M 0,340 Q 150,356 300,340 Q 450,356 600,340" fill="none" stroke="#8B7965" stroke-width="2.5"/>
+          <path d="M 0,364 Q 150,382 300,364 Q 450,382 600,364" fill="none" stroke="#9E8B74" stroke-width="1.8"/>
+          <g class="day-scenery">
+            <rect x="140" y="300" width="12" height="366" fill="#635847"/>
+            <rect x="140" y="300" width="4" height="366" fill="#9E8B70"/>
+            <rect x="440" y="300" width="12" height="366" fill="#635847"/>
+            <rect x="440" y="300" width="4" height="366" fill="#9E8B70"/>
+          </g>
+          <g class="night-layer">
+            <rect x="140" y="300" width="12" height="366" fill="#0B0E1B"/>
+            <circle cx="164" cy="392" r="48" fill="url(#streetOrbGlowGrad)"/>
+            <circle cx="164" cy="392" r="6.5" fill="#FFFDF5"/>
+            <rect x="440" y="300" width="12" height="366" fill="#0B0E1B"/>
+            <circle cx="464" cy="392" r="48" fill="url(#streetOrbGlowGrad)"/>
+            <circle cx="464" cy="392" r="6.5" fill="#FFFDF5"/>
+          </g>
+        </g>
+      </defs>
+
+      <!-- ========================================================================= -->
+      <!-- WHOLE TRAIN CARRIAGE MOTION WRAPPERS                                      -->
+      <!-- ========================================================================= -->
+      <g id="train-slow-sway-group">
+        <g id="train-micro-vibe-group">
+          <g id="train-jolt-group">
+
+            <!-- =================================================================== -->
+            <!-- LAYER 01: PARALLAX BACKGROUND (SEQUENTIAL DAY/NIGHT FADE)           -->
+            <!-- =================================================================== -->
+            <g id="background-sky-city">
+              <!-- A. MAIN WINDOW EXTERIOR (x: 452..1222, y: 224..578) -->
+              <g id="main-window-exterior" clip-path="url(#mainWindowClip)">
+                <!-- Neutral dusk/twilight base behind day & night skies -->
+                <rect x="452" y="224" width="770" height="354" fill="#181D38"/>
+                <!-- Day Sky Base (fades out first via .day-scenery) -->
+                <rect class="day-scenery" x="452" y="224" width="770" height="354" fill="url(#skyWarmGrad)"/>
+
+                <g id="main-night-sky-group">
+                  <rect x="452" y="224" width="770" height="354" fill="url(#nightSkyGrad)"/>
+                  <g fill="#FFF9E8">
+                    <circle class="star-twinkle-a" cx="496" cy="248" r="1.3"/>
+                    <circle class="star-twinkle-b" cx="542" cy="272" r="1.0"/>
+                    <circle cx="588" cy="242" r="1.4" opacity="0.8"/>
+                    <circle class="star-twinkle-a" cx="638" cy="264" r="1.1"/>
+                    <circle cx="678" cy="238" r="1.5" opacity="0.9"/>
+                    <circle class="star-twinkle-b" cx="728" cy="256" r="1.2"/>
+                    <circle cx="776" cy="244" r="1.0" opacity="0.7"/>
+                    <circle class="star-twinkle-a" cx="826" cy="268" r="1.4"/>
+                    <circle cx="882" cy="240" r="1.1" opacity="0.75"/>
+                    <circle class="star-twinkle-b" cx="924" cy="254" r="1.3"/>
+                    <circle cx="1048" cy="246" r="1.2" opacity="0.85"/>
+                    <circle class="star-twinkle-a" cx="1096" cy="266" r="1.5"/>
+                    <circle class="star-twinkle-b" cx="1152" cy="242" r="1.1"/>
+                    <circle cx="1194" cy="262" r="1.3" opacity="0.8"/>
+                  </g>
+                  <circle cx="988" cy="276" r="56" fill="url(#moonSoftHaloGrad)"/>
+                  <circle cx="988" cy="276" r="16.5" fill="#FFFDF2" opacity="0.96"/>
+                  <circle cx="983" cy="272" r="3.2" fill="#E6DEC8" opacity="0.35"/>
+                  <circle cx="993" cy="281" r="2.4" fill="#E6DEC8" opacity="0.3"/>
+                </g>
+
+                <g id="ext-layer-1-clouds">
+                  <use href="#tile-1-clouds" x="-200" y="0"/>
+                  <use href="#tile-1-clouds" x="1400" y="0"/>
+                </g>
+
+                <g id="ext-layer-2-distant">
+                  <use href="#tile-2-distant" x="-200" y="0"/>
+                  <use href="#tile-2-distant" x="1400" y="0"/>
+                </g>
+
+                <g id="ext-layer-3-midground">
+                  <use href="#tile-3-midground" x="-200" y="0"/>
+                  <use href="#tile-3-midground" x="1400" y="0"/>
+                </g>
+
+                <g id="ext-layer-4-rooftops-guardrail">
+                  <use href="#tile-4-rooftops-guardrail" x="-200" y="0"/>
+                  <use href="#tile-4-rooftops-guardrail" x="1400" y="0"/>
+                </g>
+
+                <g id="window-light-shafts">
+                  <polygon points="495,220 690,220 610,580 415,580" fill="url(#windowShaftSoftGrad)"/>
+                  <polygon points="680,220 910,220 830,580 600,580" fill="url(#windowShaftSoftGrad)"/>
+                  <polygon points="905,220 1050,220 970,580 825,580" fill="url(#windowShaftSoftGrad)" opacity="0.72"/>
+                </g>
+
+                <g id="ext-layer-5-poles-wires">
+                  <use href="#tile-5-poles-wires" x="-200" y="0"/>
+                  <use href="#tile-5-poles-wires" x="1400" y="0"/>
+                </g>
+
+                <rect id="main-sky-shade-overlay" x="452" y="224" width="770" height="354" fill="#2A364B"/>
+              </g>
+
+              <!-- B. LEFT SLIDING DOOR WINDOW EXTERIOR (x: 50..171, y: 298..668) -->
+              <g id="door-window-exterior" clip-path="url(#doorWindowClip)">
+                <rect x="50" y="298" width="121" height="370" fill="#181D38"/>
+                <g class="day-scenery">
+                  <rect x="50" y="298" width="121" height="370" fill="url(#doorWindowSky)"/>
+                  <path d="M 50,298 L 171,298 L 171,395 L 50,410 Z" fill="#F9EBC8"/>
+                </g>
+
+                <g id="door-night-sky-group">
+                  <rect x="50" y="298" width="121" height="370" fill="url(#doorNightSkyGrad)"/>
+                  <g fill="#FFF9E8">
+                    <circle class="star-twinkle-a" cx="72" cy="318" r="1.2"/>
+                    <circle cx="108" cy="312" r="1.4" opacity="0.85"/>
+                    <circle class="star-twinkle-b" cx="146" cy="326" r="1.1"/>
+                    <circle cx="86" cy="346" r="1.0" opacity="0.7"/>
+                    <circle class="star-twinkle-a" cx="132" cy="354" r="1.3"/>
+                  </g>
+                </g>
+
+                <g id="door-ext-layer-2-distant">
+                  <use href="#door-tile-distant" x="-100" y="0"/>
+                  <use href="#door-tile-distant" x="500" y="0"/>
+                </g>
+
+                <g id="door-ext-layer-3-midground">
+                  <use href="#door-tile-mid" x="-100" y="0"/>
+                  <use href="#door-tile-mid" x="500" y="0"/>
+                </g>
+
+                <g id="door-ext-layer-4-guardrail">
+                  <use href="#door-tile-guardrail" x="-100" y="0"/>
+                  <use href="#door-tile-guardrail" x="500" y="0"/>
+                </g>
+
+                <g id="door-window-sun-shaft">
+                  <polygon points="60,298 175,298 125,668 15,668" fill="url(#windowShaftSoftGrad)"/>
+                </g>
+
+                <g id="door-ext-layer-5-poles">
+                  <use href="#door-tile-poles" x="-100" y="0"/>
+                  <use href="#door-tile-poles" x="500" y="0"/>
+                </g>
+
+                <rect id="door-sky-shade-overlay" x="50" y="298" width="121" height="370" fill="#2A364B"/>
+              </g>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 02: TRAIN INTERIOR WALL BASE & CEILING STRUCTURE              -->
+            <!-- =================================================================== -->
+            <g id="train-wall-base">
+              <path fill="#4B3829" fill-rule="evenodd" d="
+                M 0,0 L 1470,0 L 1470,890 L 0,890 Z
+                M 480,224 L 1196,224 C 1212,224 1222,234 1222,250 L 1222,548 C 1222,566 1208,578 1190,578 L 484,578 C 464,578 452,565 452,546 L 452,250 C 452,234 464,224 480,224 Z
+                M 74,298 L 146,298 C 161,298 171,309 171,324 L 171,642 C 171,658 160,668 145,668 L 74,668 C 59,668 50,657 50,642 L 50,324 C 50,309 60,298 74,298 Z
+              "/>
+
+              <path d="M 0,0 L 452,0 L 452,885 L 255,885 L 255,210 L 0,210 Z" fill="#3B2B1F"/>
+              <path d="M 1222,120 L 1470,120 L 1470,885 L 1222,885 Z" fill="#523D2B"/>
+              <path d="M 1222,210 L 1320,210 L 1315,595 L 1222,595 Z" fill="#463324"/>
+              <path d="M 1215,575 L 1395,575 L 1385,760 L 1215,760 Z" fill="#423022"/>
+
+              <rect x="0" y="0" width="1470" height="108" fill="#2A1E17"/>
+              <rect x="0" y="34" width="1470" height="52" fill="#3D2D22"/>
+              
+              <path d="M 138,0 L 418,0 L 414,22 L 142,22 Z" fill="#C9A882"/>
+              <path d="M 418,0 L 442,0 L 440,34 L 415,34 Z" fill="#DEC39E"/>
+              <path d="M 472,0 L 842,0 L 842,18 L 472,18 Z" fill="#B29674"/>
+              <path d="M 885,0 L 1068,0 L 1066,18 L 887,18 Z" fill="#B99C7A"/>
+              <path d="M 1110,0 L 1372,0 L 1368,20 L 1114,20 Z" fill="#9E8364"/>
+
+              <g fill="#8B6F52">
+                <path d="M 1154,40 L 1166,40 L 1164,74 L 1152,74 Z"/>
+                <path d="M 1176,40 L 1188,40 L 1186,74 L 1174,74 Z"/>
+                <path d="M 1198,40 L 1210,40 L 1208,74 L 1196,74 Z"/>
+              </g>
+
+              <rect x="0" y="84" width="1470" height="14" fill="#1C1511"/>
+              <rect x="0" y="122" width="1470" height="10" fill="#231A14"/>
+              <path d="M 225,108 L 580,108 L 580,122 L 225,122 Z" fill="#8C5930"/>
+              <path d="M 275,110 L 420,110 L 420,120 L 275,120 Z" fill="#D58A44"/>
+              <path d="M 580,108 L 1470,108 L 1470,122 L 580,122 Z" fill="#5A3D28"/>
+
+              <rect x="0" y="96" width="84" height="58" fill="#7D5536"/>
+              <rect x="4" y="102" width="72" height="44" fill="#9F8B72"/>
+              <rect x="10" y="110" width="58" height="8" fill="#4B5D52"/>
+              <rect x="10" y="124" width="46" height="12" fill="#C49A6C"/>
+              <rect x="94" y="96" width="42" height="24" rx="2" fill="#B9A68E"/>
+              <rect x="148" y="96" width="46" height="24" rx="2" fill="#DFCDB4"/>
+              <rect x="94" y="128" width="42" height="26" rx="2" fill="#9E8B74"/>
+              <rect x="148" y="128" width="46" height="26" rx="2" fill="#C8B49B"/>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 03: MASTER --sun DRIVEN SUNLIGHT WALL SLASHES                 -->
+            <!-- =================================================================== -->
+            <g id="lighting-pole-flicker-wrap">
+              <g id="lighting-slashes">
+                <g id="sun-wall-zone-2">
+                  <path d="M 262,438 L 324,432 L 326,775 L 260,775 Z" fill="url(#sunlightWallSlash)"/>
+                  <path d="M 266,445 L 318,440 L 318,645 L 266,655 Z" fill="#F0B978"/>
+                  <path d="M 332,442 L 382,440 L 384,785 L 330,785 Z" fill="#E3A561"/>
+                  <path d="M 390,468 L 414,470 L 414,615 L 390,615 Z" fill="#C98544"/>
+                  <path d="M 235,695 L 382,695 L 382,732 L 235,732 Z" fill="#BD793B"/>
+                  <path d="M 258,742 L 382,742 L 382,775 L 258,775 Z" fill="#DDA059"/>
+                  <path d="M 235,795 L 368,795 L 368,852 L 235,852 Z" fill="#A9682E"/>
+                  <path d="M 262,802 L 335,802 L 335,845 L 262,845 Z" fill="#D5944D"/>
+                </g>
+
+                <g id="sun-wall-zone-3">
+                  <path d="M 426,216 L 452,216 L 452,320 L 426,320 Z" fill="#D4CFC4"/>
+                  <path d="M 426,320 L 452,320 L 452,585 L 426,585 Z" fill="#A97B50"/>
+                  <path d="M 395,578 L 650,578 L 650,605 L 395,605 Z" fill="#C6894B"/>
+                  <path d="M 435,580 L 648,580 L 648,596 L 435,596 Z" fill="#E6AD68"/>
+                </g>
+
+                <g id="sun-wall-zone-4">
+                  <path d="M 646,578 L 802,578 L 802,605 L 646,605 Z" fill="#C6894B"/>
+                  <path d="M 644,580 L 795,580 L 795,596 L 644,596 Z" fill="#E6AD68"/>
+                </g>
+
+                <g id="sun-wall-zone-5">
+                  <path d="M 1408,425 L 1470,425 L 1470,632 L 1402,632 L 1396,558 L 1412,542 Z" fill="#C97E3D"/>
+                  <path d="M 1416,465 L 1468,465 L 1468,618 L 1410,618 Z" fill="#DB944C"/>
+                  <path d="M 1352,646 L 1416,642 L 1422,684 L 1392,692 L 1348,682 Z" fill="#D88E46"/>
+                  <path d="M 1456,675 L 1470,675 L 1470,858 L 1454,858 Z" fill="#B56E32"/>
+                </g>
+              </g>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 04: LEFT SLIDING DOOR ASSEMBLY, MOLDING & STANCHION PIPE      -->
+            <!-- =================================================================== -->
+            <g id="door-assembly">
+              <path d="M 0,178 L 208,178 C 232,178 248,195 248,220 L 248,885 L 0,885 Z" fill="#3B2B1E" fill-opacity="0.6"/>
+              <path d="M 0,184 L 198,184 C 220,184 234,200 234,224 L 234,885 L 218,885 L 218,224 C 218,208 206,198 190,198 L 0,198 Z" fill="#2A1E15"/>
+              <path d="M 0,194 L 192,194 C 210,194 220,206 220,224 L 220,885 L 208,885 L 208,224 C 208,212 198,204 184,204 L 0,204 Z" fill="#634932"/>
+
+              <path fill="#453324" fill-rule="evenodd" d="
+                M 0,202 L 192,202 C 204,202 212,210 212,224 L 212,885 L 0,885 Z
+                M 74,298 L 146,298 C 161,298 171,309 171,324 L 171,642 C 171,658 160,668 145,668 L 74,668 C 59,668 50,657 50,642 L 50,324 C 50,309 60,298 74,298 Z
+              "/>
+
+              <path d="M 171,365 L 205,365 L 205,868 L 45,868 L 45,668 L 148,668 C 162,668 171,658 171,642 Z" fill="#7D5532"/>
+              <g id="sun-wall-zone-1">
+                <path id="door-sun-panel-outer" d="M 174,415 L 202,415 L 202,775 L 96,775 L 96,672 L 154,672 C 166,672 174,662 174,646 Z" fill="#C48849"/>
+                <path id="door-sun-panel-inner" d="M 176,445 L 198,445 L 198,742 L 118,742 L 118,674 L 160,674 C 170,674 176,665 176,650 Z" fill="#E6AF6B"/>
+              </g>
+
+              <path d="M 74,295 L 146,295 C 163,295 174,307 174,324 L 174,642 C 174,660 162,672 145,672 L 74,672 C 57,672 46,659 46,642 L 46,324 C 46,307 57,295 74,295 Z" fill="none" stroke="#2D2016" stroke-width="5"/>
+              <path d="M 172,324 L 172,642 C 172,658 161,670 145,670 L 74,670" fill="none" stroke="#F1C37E" stroke-width="3.5"/>
+
+              <g id="door-window-stickers">
+                <rect x="68" y="362" width="22" height="84" rx="2" fill="#A68B71" stroke="#5A4535" stroke-width="1.5"/>
+                <rect x="72" y="367" width="14" height="74" fill="#D9CFC0"/>
+                <circle cx="79" cy="378" r="4" fill="#B63728"/>
+                <rect x="76" y="388" width="6" height="36" fill="#9A3628"/>
+                <rect x="124" y="576" width="32" height="44" rx="2" fill="#A97F55" stroke="#5C4028" stroke-width="1.5"/>
+                <rect x="129" y="582" width="22" height="14" fill="#C9A882"/>
+                <rect x="129" y="600" width="22" height="12" fill="#7C5A3C"/>
+              </g>
+
+              <rect x="34" y="216" width="140" height="42" rx="6" fill="#5E6E5D" stroke="#2B2118" stroke-width="3"/>
+              <rect x="42" y="222" width="38" height="28" rx="2" fill="#6F826D"/>
+              <circle cx="96" cy="230" r="4" fill="#1D3834"/>
+              <rect x="91" y="236" width="10" height="10" rx="2" fill="#1D3834"/>
+              <circle cx="122" cy="230" r="4" fill="#9D3526"/>
+              <rect x="117" y="236" width="10" height="10" rx="2" fill="#9D3526"/>
+              <circle cx="148" cy="230" r="4" fill="#1D3834"/>
+              <rect x="143" y="236" width="10" height="10" rx="2" fill="#1D3834"/>
+
+              <path d="M 74,268 L 118,268 L 114,276 L 78,276 Z" fill="#C49E74"/>
+
+              <circle cx="28" cy="276" r="19" fill="#B59B80" stroke="#2B1F16" stroke-width="2.5"/>
+              <circle cx="28" cy="276" r="13" fill="none" stroke="#8F281E" stroke-width="3.5"/>
+              <line x1="19" y1="267" x2="37" y2="285" stroke="#8F281E" stroke-width="3.5"/>
+              <rect x="23" y="273" width="10" height="5" fill="#2B1F16"/>
+
+              <g fill="#2A1E15">
+                <rect x="180" y="838" width="4" height="12"/>
+                <rect x="188" y="838" width="4" height="12"/>
+                <rect x="196" y="838" width="4" height="12"/>
+              </g>
+
+              <path d="M 278,412 L 265,418 C 258,422 254,430 254,442 L 254,672 C 254,682 258,690 266,694 L 278,698" fill="none" stroke="#4D3928" stroke-width="14" stroke-linecap="round"/>
+              <path d="M 276,412 L 264,418 C 258,422 254,430 254,442 L 254,672 C 254,682 258,690 266,694 L 276,698" fill="none" stroke="#D1A675" stroke-width="6" stroke-linecap="round"/>
+              <path d="M 252,442 L 252,668" fill="none" stroke="#FFF2C2" stroke-width="2.5" stroke-linecap="round"/>
+
+              <path d="M 416,466 L 386,506 L 386,892 L 398,892 L 398,512 L 422,476 Z" fill="#312419" opacity="0.55"/>
+              <path d="M 412,462 L 378,504 C 374,510 372,518 372,528 L 372,892 L 350,906" fill="none" stroke="#6E5A46" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 410,462 L 376,504 C 372,510 370,518 370,528 L 370,892 L 348,906" fill="none" stroke="#DFC39D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 408,462 L 374,504 C 370,510 368,518 368,528 L 368,888" fill="none" stroke="#FFF5D4" stroke-width="3" stroke-linecap="round"/>
+              <path d="M 374,698 L 418,698 L 418,712 L 374,712 Z" fill="#9E7E5B"/>
+              <path d="M 374,698 L 418,698 L 418,703 L 374,703 Z" fill="#F1CB8E"/>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 05: MAIN WINDOW FRAME, WANTED POSTER & AKATSUKI LOGO DECALS   -->
+            <!-- =================================================================== -->
+            <g id="window-and-decals">
+              <path d="M 480,220 L 1196,220 C 1216,220 1226,232 1226,250 L 1226,548 C 1226,570 1212,582 1190,582 L 484,582 C 462,582 448,568 448,546 L 448,250 C 448,232 460,220 480,220 Z" fill="none" stroke="#1E1814" stroke-width="10"/>
+              <path d="M 452,250 L 452,546 C 452,566 464,578 484,578 L 806,578" fill="none" stroke="#9E7C56" stroke-width="6"/>
+              <path d="M 468,576 L 804,576" fill="none" stroke="#E8B772" stroke-width="3"/>
+
+
+
+
+              <!-- Interactive Wanted Poster Decal ("Side Projects" Trigger) -->
+              <g id="blue-window-decal"
+                 role="button"
+                 tabindex="0"
+                 aria-label="Open Side Projects section">
+                <!-- Transparent hit-box so the entire poster area is clickable -->
+                <rect x="1096" y="328" width="114" height="138" rx="8" fill="#000000" fill-opacity="0" style="pointer-events: all; cursor: pointer;"/>
+
+                <clipPath id="wantedPosterClip">
+                  <rect x="1102" y="334" width="102" height="126" rx="6" />
+                </clipPath>
+
+                <g id="wanted-poster-sheet">
+                  <g clip-path="url(#wantedPosterClip)">
+                    <image
+                      href="images/wantedposter.png"
+                      x="1102"
+                      y="334"
+                      width="102"
+                      height="126"
+                      preserveAspectRatio="xMidYMid slice"
+                    />
+                    <!-- Faint warm daylight glow on the poster paper -->
+                    <rect id="poster-day-warm-glow" x="1102" y="334" width="102" height="126" fill="#FFE3A8"/>
+                    <!-- Night dimming & blue-brown tint matching the rest of the carriage -->
+                    <rect class="decal-night-tint" x="1102" y="334" width="102" height="126" fill="#111628"/>
+                  </g>
+                  <!-- Subtle warm hover glow around the poster edge -->
+                  <rect id="wanted-poster-glow" x="1100" y="332" width="106" height="130" rx="7" fill="none" stroke="#F5E6CE" stroke-width="2.2"/>
+                </g>
+
+                <!-- Small "Side Projects" tooltip above the poster -->
+                <g id="wanted-poster-tooltip">
+                  <text x="1153" y="322" text-anchor="middle">Side Projects</text>
+                </g>
+              </g>
+
+
+
+              <!-- Akatsuki / Orange Sticker Decal with Matching Day/Night Tint -->
+              <g id="small-window-sticker">
+                <clipPath id="orangeStickerClip">
+                  <rect x="1148" y="478" width="50" height="32" rx="4" />
+                </clipPath>
+                <g clip-path="url(#orangeStickerClip)">
+                  <image
+                    href="images/orange.png"
+                    x="1148"
+                    y="478"
+                    width="50"
+                    height="32"
+                    preserveAspectRatio="xMidYMid meet"
+                  />
+                  <rect class="decal-night-tint" x="1148" y="478" width="50" height="32" fill="#111628"/>
+                </g>
+              </g>
+            </g>
+            <!-- =================================================================== -->
+            <!-- LAYER 06: WALL POSTERS, ROUTE MAP & CONTROL SWITCHES                -->
+            <!-- =================================================================== -->
+            <g id="wall-posters-and-signs">
+              <g id="door-switch-panel">
+                <rect x="255" y="318" width="24" height="54" rx="4" fill="#AE9A82" stroke="#2F231A" stroke-width="2"/>
+                <circle cx="267" cy="333" r="6" fill="#7D241B"/>
+                <circle cx="267" cy="354" r="6" fill="#7D241B"/>
+                <circle cx="265" cy="331" r="2" fill="#D46A5E"/>
+                <circle cx="265" cy="352" r="2" fill="#D46A5E"/>
+              </g>
+
+              <g id="route-map-panel"
+                 role="button"
+                 tabindex="0"
+                 aria-label="Open Work section"
+                 style="cursor: pointer; pointer-events: bounding-box;">
+                <!-- Transparent hit-target rect so every pixel of the panel is 100% clickable -->
+                <rect x="290" y="278" width="154" height="146" rx="8" fill="#000000" fill-opacity="0" style="pointer-events: all; cursor: pointer;"/>
+
+                <rect x="292" y="280" width="150" height="142" rx="6" fill="#7D6B57" stroke="#2D2218" stroke-width="3"/>
+                <rect x="297" y="286" width="140" height="128" rx="4" fill="#9E8970"/>
+                <rect x="303" y="292" width="128" height="114" rx="4" fill="#233038"/>
+                <rect x="314" y="302" width="54" height="4" fill="#687B78"/>
+                <rect x="314" y="312" width="44" height="4" fill="#8A7652"/>
+                <ellipse cx="406" cy="312" rx="18" ry="11" fill="#7E231D"/>
+                <rect x="320" y="335" width="66" height="16" rx="2" fill="#AE9A78"/>
+                <text x="327" y="347" fill="#2B241B" font-family="monospace" font-weight="bold" font-size="11" letter-spacing="1">1336-25</text>
+                <rect x="316" y="368" width="22" height="26" rx="3" fill="#8E6C32"/>
+                <rect x="320" y="373" width="14" height="10" fill="#233038"/>
+                <path d="M 345,382 L 368,382" stroke="#8A998E" stroke-width="3"/>
+                <polygon points="365,377 373,382 365,387" fill="#8A998E"/>
+                <rect x="378" y="368" width="22" height="26" rx="3" fill="#2D5852"/>
+                <rect x="382" y="373" width="14" height="10" fill="#5E8C7E"/>
+                <circle cx="412" cy="354" r="3.5" fill="#962B20"/>
+                <circle cx="422" cy="368" r="3.5" fill="#962B20"/>
+                <circle cx="416" cy="388" r="4" fill="#962B20"/>
+
+                <!-- Subtle warm hover glow around the panel frame (drawn on top of the panel) -->
+                <rect id="route-map-glow" x="290" y="278" width="154" height="146" rx="8" fill="none" stroke="#F5E6CE" stroke-width="2.5"/>
+
+                <!-- Small "Work" tooltip above the panel -->
+                <g id="route-map-tooltip">
+                  <text x="367" y="268" text-anchor="middle">Work</text>
+                </g>
+              </g>
+
+              <g id="right-wall-stickers">
+                <rect x="1248" y="268" width="38" height="86" rx="6" fill="#8B2D29"/>
+                <circle cx="1267" cy="292" r="10" fill="#B58E76"/>
+                <circle cx="1267" cy="292" r="5" fill="#8B2D29"/>
+                <rect x="1258" y="314" width="18" height="4" rx="1.5" fill="#B58E76"/>
+                <rect x="1258" y="324" width="18" height="4" rx="1.5" fill="#B58E76"/>
+                <rect x="1258" y="334" width="18" height="4" rx="1.5" fill="#B58E76"/>
+
+                <circle cx="1268" cy="392" r="18" fill="#232522" stroke="#7E6B56" stroke-width="2"/>
+                <circle cx="1268" cy="392" r="12" fill="none" stroke="#8C7B65" stroke-width="2"/>
+                <path d="M 1268,383 L 1264,395 L 1272,395 Z" fill="#B5A48B"/>
+                <circle cx="1268" cy="398" r="2.5" fill="#B5A48B"/>
+              </g>
+
+              <g id="beverage-poster">
+                <rect x="1302" y="270" width="102" height="232" rx="6" fill="#927559" stroke="#3B2B1E" stroke-width="2"/>
+                <rect x="1310" y="278" width="86" height="214" rx="4" fill="#A04B39"/>
+                <rect x="1335" y="286" width="38" height="14" rx="2" fill="#B67C63"/>
+                <text x="1339" y="297" fill="#5A271D" font-family="monospace" font-weight="bold" font-size="11">500</text>
+                <g transform="translate(1358, 362) rotate(22)">
+                  <path d="M -8,-38 L 8,-38 L 10,-22 L 16,-10 L 16,32 C 16,38 10,42 0,42 C -10,42 -16,38 -16,32 L -16,-10 L -10,-22 Z" fill="#467285" stroke="#2D4A56" stroke-width="2"/>
+                  <rect x="-7" y="-45" width="14" height="8" rx="2" fill="#9E2A22"/>
+                  <rect x="-15" y="-6" width="30" height="20" fill="#B58E72"/>
+                  <circle cx="0" cy="4" r="5" fill="#9E2A22"/>
+                  <path d="M -10,-16 L -10,26" stroke="#85B8CB" stroke-width="3" stroke-linecap="round"/>
+                </g>
+                <g transform="translate(1354, 452) rotate(-25)">
+                  <rect x="-14" y="-22" width="28" height="42" rx="4" fill="#5E3524" stroke="#2D1A12" stroke-width="2"/>
+                  <ellipse cx="0" cy="-22" rx="14" ry="4" fill="#C4A688"/>
+                  <rect x="-13" y="-12" width="26" height="16" fill="#C98A4B"/>
+                </g>
+                <circle cx="1325" cy="335" r="3" fill="#C98A6B"/>
+                <circle cx="1384" cy="395" r="3.5" fill="#C98A6B"/>
+                <circle cx="1326" cy="422" r="4" fill="#C98A6B"/>
+                <circle cx="1382" cy="475" r="3" fill="#C98A6B"/>
+              </g>
+
+              <g id="fuji-framed-art">
+                <rect x="1416" y="274" width="54" height="122" rx="3" fill="#C9AC86" stroke="#2D2016" stroke-width="2"/>
+                <rect x="1424" y="282" width="46" height="104" fill="#1C292B"/>
+                <path d="M 1426,368 L 1448,328 L 1462,328 L 1470,352 L 1470,368 Z" fill="#3B5B5E"/>
+                <path d="M 1443,337 L 1448,328 L 1462,328 L 1466,339 L 1458,336 L 1453,341 L 1448,336 Z" fill="#D5CFC2"/>
+                <circle cx="1434" cy="296" r="1.5" fill="#D5CFC2"/>
+                <circle cx="1456" cy="304" r="1.5" fill="#D5CFC2"/>
+                <circle cx="1438" cy="316" r="1.5" fill="#D5CFC2"/>
+                <rect x="1426" y="370" width="44" height="4" fill="#8C7B65"/>
+                <rect x="1426" y="378" width="44" height="4" fill="#5D4E3E"/>
+              </g>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 07: COMMUTER BENCH SEAT (SOFTENED SUN EDGE) & BLACK CAT       -->
+            <!-- =================================================================== -->
+            <g id="bench-seat">
+              <path d="M 412,805 L 1352,805 L 1348,906 L 412,906 Z" fill="#1B1614"/>
+              
+              <rect x="434" y="844" width="165" height="58" fill="#110E0D" stroke="#2E2520" stroke-width="2"/>
+              <g fill="#2A221D">
+                <rect x="448" y="848" width="8" height="50"/>
+                <rect x="466" y="848" width="8" height="50"/>
+                <rect x="484" y="848" width="8" height="50"/>
+                <rect x="502" y="848" width="8" height="50"/>
+                <rect x="520" y="848" width="8" height="50"/>
+                <rect x="538" y="848" width="8" height="50"/>
+                <rect x="556" y="848" width="8" height="50"/>
+                <rect x="574" y="848" width="8" height="50"/>
+              </g>
+
+              <rect x="658" y="844" width="184" height="58" fill="#110E0D" stroke="#2E2520" stroke-width="2"/>
+              <g fill="#261F1A">
+                <rect x="674" y="848" width="8" height="50"/>
+                <rect x="694" y="848" width="8" height="50"/>
+                <rect x="714" y="848" width="8" height="50"/>
+                <rect x="734" y="848" width="8" height="50"/>
+                <rect x="754" y="848" width="8" height="50"/>
+                <rect x="774" y="848" width="8" height="50"/>
+                <rect x="794" y="848" width="8" height="50"/>
+                <rect x="814" y="848" width="8" height="50"/>
+              </g>
+
+              <rect x="896" y="844" width="430" height="58" fill="#0F0D0C" stroke="#241D19" stroke-width="2"/>
+              <g fill="#1F1916">
+                <rect x="916" y="848" width="10" height="50"/>
+                <rect x="942" y="848" width="10" height="50"/>
+                <rect x="968" y="848" width="10" height="50"/>
+                <rect x="994" y="848" width="10" height="50"/>
+                <rect x="1020" y="848" width="10" height="50"/>
+                <rect x="1046" y="848" width="10" height="50"/>
+                <rect x="1072" y="848" width="10" height="50"/>
+                <rect x="1098" y="848" width="10" height="50"/>
+                <rect x="1124" y="848" width="10" height="50"/>
+                <rect x="1150" y="848" width="10" height="50"/>
+                <rect x="1176" y="848" width="10" height="50"/>
+                <rect x="1202" y="848" width="10" height="50"/>
+                <rect x="1228" y="848" width="10" height="50"/>
+                <rect x="1254" y="848" width="10" height="50"/>
+                <rect x="1280" y="848" width="10" height="50"/>
+                <rect x="1302" y="848" width="10" height="50"/>
+              </g>
+
+              <path d="M 405,786 L 1358,786 L 1354,836 L 408,836 Z" fill="#3B2B1F"/>
+              <path d="M 412,792 L 925,792 L 910,832 L 412,832 Z" fill="#6F5135"/>
+              <path d="M 424,796 L 620,796 L 605,826 L 424,826 Z" fill="#9E7348" style="opacity: var(--sun);"/>
+              <path d="M 655,798 L 895,798 L 882,824 L 655,824 Z" fill="#8C633B" style="opacity: var(--sun);"/>
+              <path d="M 406,784 L 915,784 L 915,791 L 406,791 Z" fill="#C4965F" style="opacity: var(--sun);"/>
+
+              <path d="M 434,598 L 1322,598 C 1335,598 1342,606 1342,620 L 1342,746 L 416,746 L 416,620 C 416,606 424,598 434,598 Z" fill="url(#benchBackBaseGrad)" stroke="#1E1814" stroke-width="4"/>
+
+              <!-- Softened diagonal sunlight edge on backrest (uses #benchSunSoftBlur) -->
+              <g id="bench-sun-backrest">
+                <path d="M 420,602 L 806,602 L 836,744 L 420,744 Z" fill="#586A50"/>
+                <path d="M 420,604 L 580,604 L 576,740 L 420,740 Z" fill="#6A6A4E" opacity="0.82"/>
+                <path d="M 582,604 L 704,604 L 702,740 L 580,740 Z" fill="#637859" opacity="0.88"/>
+                <path d="M 708,604 L 805,604 L 828,740 L 706,740 Z" fill="#587358" opacity="0.9"/>
+                <path d="M 432,598 L 806,598 L 806,606 L 432,606 Z" fill="#B59B6B"/>
+              </g>
+
+              <path d="M 580,602 C 577,645 577,695 579,742" fill="none" stroke="#18322F" stroke-width="5"/>
+              <path d="M 584,604 C 582,645 582,695 584,742" fill="none" stroke="#7A8968" stroke-width="3" style="opacity: var(--sun);"/>
+              <path d="M 705,602 C 703,645 703,695 705,742" fill="none" stroke="#16302D" stroke-width="6"/>
+              <path d="M 710,604 C 708,645 708,695 710,742" fill="none" stroke="#6E8568" stroke-width="3" style="opacity: var(--sun);"/>
+              <path d="M 835,602 C 833,645 833,695 835,742" fill="none" stroke="#132927" stroke-width="7"/>
+              <path d="M 960,602 C 958,645 958,695 960,742" fill="none" stroke="#112523" stroke-width="6"/>
+              <path d="M 1082,602 C 1080,645 1080,695 1082,742" fill="none" stroke="#0F2221" stroke-width="6"/>
+              <path d="M 1205,602 C 1204,645 1204,695 1205,742" fill="none" stroke="#0E201F" stroke-width="6"/>
+
+              <!-- Re-stroke backrest outer border so the soft sun blur stays cleanly inside the cushion -->
+              <path d="M 434,598 L 1322,598 C 1335,598 1342,606 1342,620 L 1342,746 L 416,746 L 416,620 C 416,606 424,598 434,598 Z" fill="none" stroke="#1E1814" stroke-width="4"/>
+
+              <path d="M 424,738 L 1340,738 C 1354,738 1362,746 1362,758 L 1362,774 C 1362,782 1355,786 1344,786 L 414,786 C 406,786 402,781 402,773 L 402,756 C 402,745 410,738 424,738 Z" fill="url(#benchCushionBaseGrad)" stroke="#181412" stroke-width="4"/>
+              <path d="M 422,740 L 1342,740 L 1356,756 L 408,756 Z" fill="#234843"/>
+
+              <!-- Softened diagonal sunlight edge on seat cushion (uses #benchSunSoftBlur) -->
+              <g id="bench-sun-cushion">
+                <path d="M 422,740 L 892,740 L 872,768 L 406,768 Z" fill="#587A59"/>
+                <path d="M 422,740 L 892,740 L 872,756 L 408,756 Z" fill="#7D9874"/>
+                <path d="M 412,752 L 882,752 L 878,760 L 412,760 Z" fill="#92AE85"/>
+              </g>
+              <path d="M 875,754 L 1355,754 L 1355,760 L 875,760 Z" fill="#2B5650" opacity="0.6"/>
+              <path d="M 424,738 L 1340,738 C 1354,738 1362,746 1362,758 L 1362,774 C 1362,782 1355,786 1344,786 L 414,786 C 406,786 402,781 402,773 L 402,756 C 402,745 410,738 424,738 Z" fill="none" stroke="#181412" stroke-width="4"/>
+
+              <path d="M 410,602 L 424,602 L 424,742 L 410,742 Z" fill="#9A7C58" stroke="#2A1E15" stroke-width="2.5"/>
+
+
+              
+              <!-- INTERACTIVE BLACK CAT SITTING ON BENCH -->
+              <g id="black-cat" transform="translate(822, 660)" role="button" tabindex="0" aria-label="About Sanju">
+                <rect x="-10" y="-18" width="194" height="118" fill="transparent"/>
+
+                <ellipse cx="84" cy="86.5" rx="88" ry="9.5" fill="#07100E" opacity="0.38"/>
+                <path opacity="0.78" d="M84 95C130.392 95 168 90.9706 168 86C168 81.0294 130.392 77 84 77C37.6081 77 0 81.0294 0 86C0 90.9706 37.6081 95 84 95Z" fill="#0A1412"/>
+
+                <g id="cat-figure-wrap">
+                  <g id="cat-breathe-group">
+                    <path id="cat-hover-glow-rim" d="M2.00014 66C-1.99986 46 16.0001 24 44.0001 20C66.0001 17 90.0001 26 112 32C116 20 122 10 128 0L133 16C142 14 152 14 160 17L173 1C174 14 172 28 168 39C176 50 176 66 168 78C158 86 128 87 84.0001 87C36.0001 87 6.00014 82 2.00014 66Z" fill="none" stroke="#E8D5BC" stroke-width="2.6" stroke-linejoin="round"/>
+
+                    <path d="M2.00014 66C-1.99986 46 16.0001 24 44.0001 20C66.0001 17 90.0001 26 112 32L133 16C142 14 152 14 160 17L168 39C176 50 176 66 168 78C158 86 128 87 84.0001 87C36.0001 87 6.00014 82 2.00014 66Z" fill="#0B0B0B"/>
+
+                    <g id="cat-haunch-group">
+                      <path d="M14 49.9999C26 31.9999 52 25.9999 78 29.9999C64 37.9999 52 51.9999 48 65.9999C32 65.9999 18 59.9999 14 49.9999Z" fill="#1D1916"/>
+                      <path d="M62 38C78 38 94 46 102 60C86 64 70 60 62 38Z" fill="#27211C"/>
+                    </g>
+
+                    <path id="cat-sun-rim" d="M3.5 60C3 43 18 24 44 20C64 17.5 85 24.5 106 30.5" stroke="#E5A95C" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+                    <path id="cat-night-rim" d="M44 20C66 17 90 26 112 32" stroke="#8FA5DB" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+
+                    <g id="cat-tail-sway-wrap">
+                      <g id="cat-tail-group">
+                        <path d="M4 66C14 64 26 68 42 70C24 75 10 73 4 66Z" fill="#0B0B0B"/>
+                        <path d="M8 68C25 72 55 74 78 72C58 79 22 79 8 68Z" fill="#1A1715"/>
+                      </g>
+                    </g>
+
+                    <g id="cat-head-group">
+                      <path d="M110 34C114 22 124 15 133 16C142 14 152 14 160 17C167 22 170 31 169 42C175 51 174 65 167 76C154 83 132 83 114 76C106 64 106 46 110 34Z" fill="#0B0B0B"/>
+
+                      <g id="cat-ear-left">
+                        <path d="M111 33C115 20 122 10 128 0L135 19Z" fill="#0B0B0B"/>
+                      </g>
+                      <g id="cat-ear-right">
+                        <path d="M157 18L173 1C174 14 172 28 167 40Z" fill="#0B0B0B"/>
+                      </g>
+
+                      <g id="cat-eyes-gaze-wrap">
+                        <g id="cat-eyes-group">
+                          <path d="M129 39L143 41C142 46 134 47 129 42V39Z" fill="#DCE4E6"/>
+                          <path d="M128 39L144 41" stroke-width="1.5" stroke="#0B0B0B"/>
+                          <path d="M152 41L165 39C165 44 157 46 152 43V41Z" fill="#DCE4E6"/>
+                          <path d="M151 41L166 39" stroke-width="1.5" stroke="#0B0B0B"/>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+
+                <g id="cat-hover-bubble" class="cat-speech-bubble">
+                  <text x="112" y="-14" text-anchor="middle">About</text>
+                </g>
+
+                <g id="cat-psst-bubble" class="cat-speech-bubble">
+                  <text x="142" y="-14" text-anchor="middle">PSST...</text>
+                </g>
+              </g>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 08: PERSPECTIVE LINOLEUM TRAIN FLOOR                          -->
+            <!-- =================================================================== -->
+            <g id="floor-reflections">
+              <rect x="0" y="882" width="1470" height="168" fill="url(#floorBaseGrad)"/>
+              <rect x="0" y="882" width="1470" height="168" fill="url(#floorDepthGrad)"/>
+
+              <path d="M 1020,882 L 1470,882 L 1470,1050 L 940,1050 Z" fill="#3B2B1E" opacity="0.55"/>
+              <path d="M 1260,882 L 1470,882 L 1470,1050 L 1210,1050 Z" fill="#2B1F16" opacity="0.65"/>
+
+              <path d="M 390,898 L 1368,898 L 1385,934 L 372,934 Z" fill="#231912" opacity="0.78"/>
+              <path d="M 380,912 L 1375,912 L 1395,952 L 358,952 Z" fill="#312319" opacity="0.45"/>
+
+              <path d="M 0,883 L 248,883 L 244,891 L 0,891 Z" fill="#7D5A38"/>
+              <path d="M 36,885 L 214,885 L 212,888 L 36,888 Z" fill="#DFB680" opacity="0.75"/>
+              <path d="M 248,884 L 412,884 L 410,890 L 246,890 Z" fill="#9E7348"/>
+              <path d="M 408,903 L 1354,903 L 1356,909 L 406,909 Z" fill="#5E442D"/>
+              <path d="M 412,904 L 940,904 L 938,907 L 410,907 Z" fill="#C98F52" opacity="0.65"/>
+
+              <g id="floor-pole-flicker-wrap">
+                <g id="floor-sun-reflections">
+                  <g id="floor-sun-zone-1">
+                    <path d="M 62,890 L 206,890 L 164,1050 L 14,1050 Z" fill="url(#floorSunBeamGrad)"/>
+                    <path d="M 118,890 L 198,890 L 162,1050 L 82,1050 Z" fill="#C98F52" opacity="0.32"/>
+                  </g>
+
+                  <g id="floor-sun-zone-2">
+                    <path d="M 252,888 L 392,888 L 348,1050 L 195,1050 Z" fill="url(#floorSunBeamGrad)"/>
+                    <path d="M 262,890 L 346,890 L 304,1050 L 214,1050 Z" fill="#DFB680" opacity="0.34"/>
+                    <path d="M 336,890 L 386,890 L 348,1050 L 296,1050 Z" fill="#C98F52" opacity="0.28"/>
+                    <path d="M 180,968 L 395,965 L 385,992 L 165,994 Z" fill="#DFB680" opacity="0.14"/>
+                  </g>
+
+                  <g id="floor-sun-zone-3">
+                    <path d="M 428,912 L 655,912 L 615,1050 L 368,1050 Z" fill="#7D5A38" opacity="0.46"/>
+                    <path d="M 448,916 L 642,916 L 592,1050 L 394,1050 Z" fill="url(#floorSunBeamGrad)"/>
+                    <path d="M 390,965 L 650,965 L 640,992 L 380,992 Z" fill="#DFB680" opacity="0.14"/>
+                  </g>
+
+                  <g id="floor-sun-zone-4">
+                    <path d="M 650,912 L 905,912 L 855,1050 L 610,1050 Z" fill="#7D5A38" opacity="0.46"/>
+                    <path d="M 672,916 L 875,916 L 826,1050 L 620,1050 Z" fill="url(#floorSunBeamGrad)"/>
+                    <path d="M 645,965 L 940,972 L 915,996 L 635,992 Z" fill="#DFB680" opacity="0.14"/>
+                  </g>
+
+                  <g id="floor-sun-zone-5">
+                    <path d="M 1392,890 L 1470,890 L 1470,1050 L 1358,1050 Z" fill="#7D5A38" opacity="0.35"/>
+                    <path d="M 1428,892 L 1470,892 L 1470,1040 L 1402,1040 Z" fill="#C98F52" opacity="0.24"/>
+                  </g>
+                </g>
+              </g>
+
+              <g fill="none" stroke-linecap="round">
+                <line x1="0" y1="946" x2="1470" y2="946" stroke="#3A2A1D" stroke-width="2" opacity="0.65"/>
+                <line x1="60" y1="948" x2="920" y2="948" stroke="#DFB680" stroke-width="1" opacity="0.22"/>
+                <line x1="246" y1="888" x2="178" y2="1050" stroke="#3A2A1D" stroke-width="2" opacity="0.6"/>
+                <line x1="248" y1="888" x2="180" y2="1050" stroke="#C98F52" stroke-width="1" opacity="0.28"/>
+                <line x1="595" y1="908" x2="548" y2="1050" stroke="#3A2A1D" stroke-width="2" opacity="0.55"/>
+                <line x1="597" y1="908" x2="550" y2="1050" stroke="#C98F52" stroke-width="1" opacity="0.22"/>
+                <line x1="965" y1="908" x2="948" y2="1050" stroke="#2B1F16" stroke-width="2" opacity="0.6"/>
+                <line x1="1348" y1="906" x2="1382" y2="1050" stroke="#241911" stroke-width="2.2" opacity="0.65"/>
+              </g>
+
+              <ellipse cx="360" cy="904" rx="22" ry="6" fill="#231810" opacity="0.7"/>
+              <path d="M 372,882 L 372,892 L 350,906" fill="none" stroke="#6E5A46" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 370,882 L 370,892 L 348,906" fill="none" stroke="#DFC39D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <g fill="#DFB680" opacity="0.32">
+                <ellipse cx="242" cy="972" rx="4" ry="1"/>
+                <ellipse cx="298" cy="1012" rx="5" ry="1.2"/>
+                <ellipse cx="315" cy="962" rx="3" ry="0.9"/>
+                <ellipse cx="468" cy="984" rx="4.5" ry="1.1"/>
+                <ellipse cx="522" cy="1024" rx="3.5" ry="1"/>
+                <ellipse cx="618" cy="966" rx="4" ry="1"/>
+                <ellipse cx="745" cy="995" rx="5" ry="1.1"/>
+                <ellipse cx="812" cy="960" rx="3.5" ry="0.9"/>
+                <ellipse cx="1418" cy="988" rx="4" ry="1"/>
+              </g>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- FLOATING GOLDEN DUST MOTES IN SUNBEAMS                              -->
+            <!-- =================================================================== -->
+            <g id="floating-dust-motes" fill="#FFF2C2">
+              <circle class="dust-mote-a" style="animation-delay: -0.5s;" cx="285" cy="540" r="2.2"/>
+              <circle class="dust-mote-b" style="animation-delay: -2.1s;" cx="348" cy="610" r="1.8"/>
+              <circle class="dust-mote-a" style="animation-delay: -4.2s;" cx="312" cy="715" r="2.4"/>
+              <circle class="dust-mote-b" style="animation-delay: -1.3s;" cx="465" cy="520" r="2.0"/>
+              <circle class="dust-mote-a" style="animation-delay: -5.6s;" cx="560" cy="645" r="1.9"/>
+              <circle class="dust-mote-b" style="animation-delay: -3.4s;" cx="685" cy="590" r="2.3"/>
+              <circle class="dust-mote-a" style="animation-delay: -6.8s;" cx="755" cy="675" r="1.7"/>
+              <circle class="dust-mote-b" style="animation-delay: -2.9s;" cx="295" cy="875" r="2.1"/>
+              <circle class="dust-mote-a" style="animation-delay: -4.9s;" cx="515" cy="925" r="2.0"/>
+              <circle class="dust-mote-b" style="animation-delay: -0.9s;" cx="1425" cy="560" r="2.1"/>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 10: INTERIOR SHADE & NIGHT PALETTE OVERLAYS                   -->
+            <!-- Placed BEFORE luggage rack & straps so ceiling light never hazes    -->
+            <!-- the hanging straps or window glass!                                 -->
+            <!-- =================================================================== -->
+            <rect id="interior-shade-overlay" x="0" y="0" width="1470" height="1050" fill="#161A24"/>
+
+            <g id="window-night-reflections">
+              <g clip-path="url(#mainWindowClip)" opacity="0.22">
+                <polygon points="480,242 820,242 835,256 468,256" fill="#FFE6B0" opacity="0.65"/>
+                <polygon points="870,242 1185,242 1200,256 858,256" fill="#FFE6B0" opacity="0.55"/>
+                <rect x="452" y="274" width="770" height="5" fill="#B89972" opacity="0.45"/>
+                <rect x="452" y="292" width="770" height="3" fill="#8C7355" opacity="0.35"/>
+                <path d="M 552,276 L 566,332 L 538,332 Z" fill="none" stroke="#E6B87A" stroke-width="2.5" opacity="0.5"/>
+                <path d="M 698,276 L 712,332 L 684,332 Z" fill="none" stroke="#E6B87A" stroke-width="2.5" opacity="0.5"/>
+                <path d="M 834,276 L 848,332 L 820,332 Z" fill="none" stroke="#E6B87A" stroke-width="2.5" opacity="0.5"/>
+                <rect x="462" y="492" width="748" height="62" rx="8" fill="#2A4D47" opacity="0.42"/>
+                <rect x="462" y="544" width="748" height="24" rx="4" fill="#8C6239" opacity="0.38"/>
+                <polygon points="560,224 635,224 505,578 452,578" fill="#D6E2FF" opacity="0.16"/>
+                <polygon points="940,224 985,224 855,578 810,578" fill="#D6E2FF" opacity="0.12"/>
+              </g>
+              <g clip-path="url(#doorWindowClip)" opacity="0.20">
+                <rect x="56" y="318" width="108" height="8" fill="#FFE6B0" opacity="0.55"/>
+                <polygon points="68,298 104,298 62,668 50,668" fill="#D6E2FF" opacity="0.18"/>
+                <rect x="54" y="545" width="112" height="75" fill="#7D5532" opacity="0.35"/>
+              </g>
+            </g>
+
+            <g id="interior-night-palette-overlay">
+              <path fill="#111628" fill-opacity="0.46" fill-rule="evenodd" d="
+                M 0,0 L 1470,0 L 1470,1050 L 0,1050 Z
+                M 480,224 L 1196,224 C 1212,224 1222,234 1222,250 L 1222,548 C 1222,566 1208,578 1190,578 L 484,578 C 464,578 452,565 452,546 L 452,250 C 452,234 464,224 480,224 Z
+                M 74,298 L 146,298 C 161,298 171,309 171,324 L 171,642 C 171,658 160,668 145,668 L 74,668 C 59,668 50,657 50,642 L 50,324 C 50,309 60,298 74,298 Z
+              "/>
+              <rect x="405" y="802" width="955" height="106" fill="#090C16" opacity="0.48"/>
+            </g>
+
+            <!-- C. Soft, Distance-Faded Night Ceiling Lights (Strictly Clipped Off Windows & Behind Straps) -->
+            <g id="interior-ceiling-lights" clip-path="url(#interiorWallSeatFloorClip)">
+              <!-- Soft radial ceiling panel halos -->
+              <rect x="120" y="0" width="325" height="50" fill="url(#ceilingPanelHaloGrad)"/>
+              <rect x="455" y="0" width="405" height="44" fill="url(#ceilingPanelHaloGrad)"/>
+              <rect x="870" y="0" width="215" height="44" fill="url(#ceilingPanelHaloGrad)"/>
+              <rect x="1095" y="0" width="295" height="48" fill="url(#ceilingPanelHaloGrad)"/>
+
+              <!-- Lit ceiling diffuser panels -->
+              <path d="M 138,0 L 418,0 L 414,22 L 142,22 Z" fill="#FFF6DE"/>
+              <path d="M 418,0 L 442,0 L 440,34 L 415,34 Z" fill="#FFFDF2"/>
+              <path d="M 472,0 L 842,0 L 842,18 L 472,18 Z" fill="#FFF7E2"/>
+              <path d="M 885,0 L 1068,0 L 1066,18 L 887,18 Z" fill="#FFF7E2"/>
+              <path d="M 1110,0 L 1372,0 L 1368,20 L 1114,20 Z" fill="#FFF5DC"/>
+
+              <!-- Soft radial distance-faded wall washes (no flat trapezoid edges, clipped off windows) -->
+              <ellipse cx="285" cy="95" rx="260" ry="380" fill="url(#ceilingWallWashA)"/>
+              <ellipse cx="655" cy="95" rx="340" ry="420" fill="url(#ceilingWallWashB)"/>
+              <ellipse cx="1180" cy="95" rx="350" ry="440" fill="url(#ceilingWallWashC)"/>
+
+              <!-- Subtle warm rim on window sill & bench top edge -->
+              <path d="M 452,576 L 1218,576" stroke="#E8B772" stroke-width="2" opacity="0.35"/>
+
+              <!-- Soft warm pools on bench backrest, seat cushion & floor -->
+              <ellipse cx="645" cy="672" rx="225" ry="74" fill="url(#seatCeilingPoolGrad)"/>
+              <ellipse cx="1115" cy="672" rx="235" ry="74" fill="url(#seatCeilingPoolGrad)"/>
+              <path d="M 420,738 L 1345,738 L 1356,772 L 406,772 Z" fill="#FFB95E" opacity="0.10"/>
+              <path d="M 424,598 L 1325,598 L 1325,605 L 424,605 Z" fill="#FFE0A3" opacity="0.22"/>
+
+              <ellipse cx="265" cy="965" rx="210" ry="72" fill="url(#floorCeilingPoolGrad)"/>
+              <ellipse cx="675" cy="975" rx="285" ry="78" fill="url(#floorCeilingPoolGrad)"/>
+              <ellipse cx="1135" cy="975" rx="265" ry="75" fill="url(#floorCeilingPoolGrad)"/>
+            </g>
+
+            <!-- =================================================================== -->
+            <!-- LAYER 11: OVERHEAD LUGGAGE RACK & PENDULUM HAND STRAPS              -->
+            <!-- Rendered ABOVE #interior-ceiling-lights so straps stay crisp!       -->
+            <!-- =================================================================== -->
+            <g id="luggage-rack-and-straps">
+              <rect x="0" y="84" width="1470" height="14" fill="#171C1E"/>
+              <rect x="0" y="88" width="1470" height="4" fill="#2C3D40"/>
+              <rect x="0" y="108" width="1470" height="16" fill="#151819"/>
+              <path d="M 195,110 L 580,110 L 580,118 L 195,118 Z" fill="#B5743B"/>
+              <path d="M 275,111 L 415,111 L 415,117 L 275,117 Z" fill="#F2B66D"/>
+              <path d="M 580,111 L 1470,111 L 1470,116 L 580,116 Z" fill="#5D422B"/>
+
+              <rect x="416" y="0" width="22" height="126" fill="#2B211A"/>
+              <rect x="422" y="0" width="8" height="36" fill="#D5B895"/>
+              <rect x="928" y="0" width="22" height="126" fill="#241C16"/>
+
+              <path d="M 358,128 C 364,158 378,184 398,194 L 1470,194 L 1470,184 L 404,184 C 388,176 376,154 372,128 Z" fill="#3B2B1E"/>
+              <path d="M 354,126 L 372,126 C 378,148 386,166 402,176 L 392,184 C 374,172 360,152 354,126 Z" fill="#D59B5A"/>
+
+              <rect x="366" y="126" width="1104" height="10" fill="#8C633B"/>
+              <rect x="366" y="128" width="460" height="5" fill="#DF9E55"/>
+              <rect x="378" y="146" width="1092" height="8" fill="#231B15"/>
+              <rect x="388" y="166" width="1082" height="8" fill="#2E231B"/>
+              <rect x="398" y="184" width="1072" height="10" fill="#1E1712"/>
+
+              <g stroke="#251C16" stroke-width="8" stroke-linecap="round">
+                <line x1="414" y1="132" x2="424" y2="188"/>
+                <line x1="478" y1="132" x2="486" y2="188"/>
+                <line x1="598" y1="132" x2="596" y2="188"/>
+                <line x1="654" y1="132" x2="650" y2="188"/>
+                <line x1="782" y1="132" x2="774" y2="188"/>
+                <line x1="895" y1="132" x2="884" y2="188"/>
+                <line x1="998" y1="132" x2="984" y2="188"/>
+                <line x1="1116" y1="132" x2="1098" y2="188"/>
+                <line x1="1182" y1="132" x2="1164" y2="188"/>
+                <line x1="1312" y1="132" x2="1292" y2="188"/>
+                <line x1="1386" y1="132" x2="1364" y2="188"/>
+              </g>
+              <g stroke="#8C6542" stroke-width="3" stroke-linecap="round">
+                <line x1="412" y1="134" x2="422" y2="184"/>
+                <line x1="476" y1="134" x2="484" y2="184"/>
+                <line x1="596" y1="134" x2="594" y2="184"/>
+                <line x1="652" y1="134" x2="648" y2="184"/>
+                <line x1="780" y1="134" x2="772" y2="184"/>
+              </g>
+
+              <!-- STRAP 01 (Pivot: 555, 122) -->
+              <g id="strap-jolt-1">
+                <!-- Fixed metal rail clasp (never detaches from overhead pipe) -->
+                <rect x="544" y="114" width="22" height="12" rx="3" fill="#121E21" stroke="#0A1113" stroke-width="1.5"/>
+                <rect x="546" y="116" width="18" height="3" rx="1" fill="#4D6868" opacity="0.7"/>
+                <g id="hand-strap-1" style="cursor: grab;">
+                  <!-- Dynamic flexible thread/webbing paths (updated by physics) -->
+                  <path class="strap-band-main" d="M 555,122 Q 555,162 555,202" fill="none" stroke="#172A2E" stroke-width="16" stroke-linecap="round"/>
+                  <path class="strap-band-edge" d="M 550,124 Q 550,162 550,200" fill="none" stroke="#4D6868" stroke-width="2.5" stroke-linecap="round"/>
+                  <path class="strap-band-stitch" d="M 558,125 Q 558,162 558,200" fill="none" stroke="#0D181B" stroke-width="1.2" stroke-dasharray="3 3" stroke-linecap="round"/>
+                  <!-- Hinged Triangular Handle Ring -->
+                  <g class="strap-handle-ring">
+                    <rect x="543" y="196" width="24" height="16" rx="4" fill="#1C2C30" stroke="#0E1719" stroke-width="2"/>
+                    <circle cx="555" cy="204" r="2.2" fill="#4D6868"/>
+                    <path fill="#1E2F33" fill-rule="evenodd" d="
+                      M 544,210 L 568,210 L 602,262 C 608,272 602,284 588,286 C 566,290 538,290 516,284 C 502,280 498,270 505,258 Z
+                      M 554,224 L 582,266 C 564,270 542,270 524,266 Z
+                    "/>
+                    <path d="M 544,212 L 553,224 L 524,266 L 580,266 L 586,276 L 516,276 L 503,262 Z" fill="#DF8B3E"/>
+                    <path d="M 503,262 L 516,276 L 586,276 L 578,286 C 556,289 532,288 514,283 C 503,280 499,271 503,262 Z" fill="#A65E2E"/>
+                    <path d="M 505,260 L 544,212" stroke="#FCE092" stroke-width="3.5" stroke-linecap="round"/>
+                  </g>
+                </g>
+              </g>
+
+              <!-- STRAP 02 (Pivot: 701, 122) -->
+              <g id="strap-jolt-2">
+                <rect x="690" y="114" width="22" height="12" rx="3" fill="#121E21" stroke="#0A1113" stroke-width="1.5"/>
+                <rect x="692" y="116" width="18" height="3" rx="1" fill="#4D6868" opacity="0.7"/>
+                <g id="hand-strap-2" style="cursor: grab;">
+                  <path class="strap-band-main" d="M 701,122 Q 701,162 701,202" fill="none" stroke="#172A2E" stroke-width="16" stroke-linecap="round"/>
+                  <path class="strap-band-edge" d="M 696,124 Q 696,162 696,200" fill="none" stroke="#4D6868" stroke-width="2.5" stroke-linecap="round"/>
+                  <path class="strap-band-stitch" d="M 704,125 Q 704,162 704,200" fill="none" stroke="#0D181B" stroke-width="1.2" stroke-dasharray="3 3" stroke-linecap="round"/>
+                  <g class="strap-handle-ring">
+                    <rect x="689" y="196" width="24" height="16" rx="4" fill="#1C2C30" stroke="#0E1719" stroke-width="2"/>
+                    <circle cx="701" cy="204" r="2.2" fill="#4D6868"/>
+                    <path fill="#1E2F33" fill-rule="evenodd" d="
+                      M 690,210 L 714,210 L 742,264 C 748,274 742,285 728,288 C 708,291 684,291 666,285 C 654,281 650,271 656,260 Z
+                      M 702,226 L 725,268 C 708,271 690,271 675,267 Z
+                    "/>
+                    <path d="M 690,212 L 700,226 L 675,267 L 724,268 L 728,278 L 666,278 L 656,264 Z" fill="#DF8538"/>
+                    <path d="M 656,264 L 666,278 L 728,278 L 720,287 C 700,290 680,289 664,284 C 655,280 652,272 656,264 Z" fill="#9E5227"/>
+                    <path d="M 658,262 L 690,212" stroke="#FCE092" stroke-width="3.5" stroke-linecap="round"/>
+                  </g>
+                </g>
+              </g>
+
+              <!-- STRAP 03 (Pivot: 837, 122) -->
+              <g id="strap-jolt-3">
+                <rect x="826" y="114" width="22" height="12" rx="3" fill="#121E21" stroke="#0A1113" stroke-width="1.5"/>
+                <rect x="828" y="116" width="18" height="3" rx="1" fill="#4D6868" opacity="0.7"/>
+                <g id="hand-strap-3" style="cursor: grab;">
+                  <path class="strap-band-main" d="M 837,122 Q 837,162 837,202" fill="none" stroke="#172A2E" stroke-width="16" stroke-linecap="round"/>
+                  <path class="strap-band-edge" d="M 832,124 Q 832,162 832,200" fill="none" stroke="#4D6868" stroke-width="2.5" stroke-linecap="round"/>
+                  <path class="strap-band-stitch" d="M 840,125 Q 840,162 840,200" fill="none" stroke="#0D181B" stroke-width="1.2" stroke-dasharray="3 3" stroke-linecap="round"/>
+                  <g class="strap-handle-ring">
+                    <rect x="825" y="196" width="24" height="16" rx="4" fill="#1C2C30" stroke="#0E1719" stroke-width="2"/>
+                    <circle cx="837" cy="204" r="2.2" fill="#4D6868"/>
+                    <path fill="#1B2B2F" fill-rule="evenodd" d="
+                      M 826,210 L 850,210 L 890,264 C 896,274 890,286 874,290 C 852,294 824,294 804,286 C 792,281 788,270 795,258 Z
+                      M 838,225 L 870,268 C 850,272 828,272 812,267 Z
+                    "/>
+                    <path d="M 826,212 L 836,225 L 812,267 L 868,268 L 866,278 L 806,278 L 794,262 Z" fill="#D57A34"/>
+                    <path d="M 794,262 L 806,278 L 866,278 L 860,289 C 838,292 818,290 802,284 C 793,280 790,271 794,262 Z" fill="#8C4822"/>
+                    <path d="M 796,260 L 826,212" stroke="#F6D17E" stroke-width="3.5" stroke-linecap="round"/>
+                  </g>
+                </g>
+              </g>
+              </g>
+
+
+
+            <!-- D. Sweeping Streetlight Flashes Across Seat & Floor Only (Clipped Off Windows) -->
+            <g id="interior-streetlight-sweep" clip-path="url(#interiorWallSeatFloorClip)">
+              <polygon points="600,580 885,580 785,830 500,830" fill="url(#streetSweepSoftGrad)"/>
+              <polygon points="635,735 865,735 825,786 595,786" fill="url(#streetSweepSoftGrad)" opacity="0.75"/>
+              <polygon points="490,885 805,885 685,1050 370,1050" fill="url(#streetSweepSoftGrad)"/>
+            </g>
+
+          </g><!-- /#train-jolt-group -->
+        </g><!-- /#train-micro-vibe-group -->
+      </g><!-- /#train-slow-sway-group -->
+    </svg>
+  </div>
+
+
+  <!-- WORKS SECTION OVERLAY (Opens with page blur when clicking the black cat) -->
+  <div id="worksModalBackdrop" class="works-modal-backdrop" role="dialog" aria-modal="true" aria-label="Selected Works">
+    <div class="works-modal-card" id="worksModalCard">
+      <div class="works-header-row">
+        <span>Work</span>
+        <button id="worksCloseBtn" class="works-close-btn" type="button" aria-label="Close work overlay">&#10005;</button>
+      </div>
+      <ul class="works-list">
+        <li>
+          <a class="works-item-link" href="velo.html" data-project="velo">
+            <span class="works-item-title">Velo</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Campus Mobility App</span>
+          </a>
+        </li>
+        <li>
+          <a class="works-item-link" href="workmate.html" data-project="workmate">
+            <span class="works-item-title">WorkMate</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">A Multilingual Workforce Experience</span>
+          </a>
+        </li>
+        <li>
+          <a class="works-item-link" href="esummit.html" data-project="esummit">
+            <span class="works-item-title">E-Summit '26</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Techfest web design</span>
+          </a>
+        </li>
+        <li>
+          <a class="works-item-link" href="dormi.html" data-project="dormi">
+            <span class="works-item-title">Dormi</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Hostel and PG's Finder</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ABOUT OVERLAY (Opens when clicking the black cat) -->
+  <div id="aboutModalBackdrop" class="works-modal-backdrop" role="dialog" aria-modal="true" aria-label="About Me">
+    <div class="works-modal-card about-modal-card" id="aboutModalCard">
+      <div class="works-header-row">
+        <span>About</span>
+        <button id="aboutCloseBtn" class="works-close-btn" type="button" aria-label="Close about overlay">&#10005;</button>
+      </div>
+
+      <p class="about-bio">
+        hi, i'm Sanju. a <strong>product designer</strong> with too many side projects. i like making interfaces that feel personal, and i do my best work late at night with coffee.
+      </p>
+
+      <div class="about-section-label">where i've been working</div>
+
+      <ul class="about-timeline">
+        <li class="about-row">
+          <span class="about-date">jul – aug 2026</span>
+          <div class="about-entry">
+            <div class="about-role-title"><strong>Rebuild</strong> : UI/UX Intern</div>
+            <p class="about-role-desc">
+              Designed the Android experience for a social wellness app, now on Google Play.
+            </p>
+          </div>
+        </li>
+
+        <li class="about-row">
+          <span class="about-date">may – jul 2026</span>
+          <div class="about-entry">
+            <div class="about-role-title"><strong>Assanj Web Agency</strong> : Web Design Intern</div>
+            <p class="about-role-desc">
+              Web agency for roofing & construction clients.
+            </p>
+          </div>
+        </li>
+
+        <li class="about-row">
+          <span class="about-date">oct 2025 – oct 2026</span>
+          <div class="about-entry">
+            <div class="about-role-title"><strong>iConnect GJUS&T</strong> : UI/UX Intern</div>
+            <p class="about-role-desc">
+              Contributed to achieving 1,500+ registrations by designing an engaging and conversion-focused event experience.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="about-footer">
+        <span class="about-footer-label">find me here</span>
+        <div class="about-links">
+          <a href="https://linkedin.com/in/isanjukatariya" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <span class="about-sep">/</span>
+          <a href="https://x.com/isanjukatariya" target="_blank" rel="noopener noreferrer">X</a>
+          <span class="about-sep">/</span>
+          <span class="about-handle">@isanjukatariya</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDE PROJECTS OVERLAY (Opens when clicking the Wanted Poster) -->
+  <div id="sideProjectsBackdrop" class="works-modal-backdrop" role="dialog" aria-modal="true" aria-label="Side Projects">
+    <div class="works-modal-card" id="sideProjectsCard">
+      <div class="works-header-row">
+        <span>Side Projects</span>
+        <button id="sideProjectsCloseBtn" class="works-close-btn" type="button" aria-label="Close side projects overlay">&#10005;</button>
+      </div>
+      <ul class="works-list">
+        <li>
+          <a class="works-item-link" href="https://akatsukiflag.vercel.app/" target="_blank" rel="noopener noreferrer">
+            <span class="works-item-title">Akatsuki WebGL Render</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Interactive Three.js &amp; WebGL emblem</span>
+          </a>
+        </li>
+        <li>
+          <a class="works-item-link" href="https://gallery-phi-plum.vercel.app/" target="_blank" rel="noopener noreferrer">
+            <span class="works-item-title">Anime Archive</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Personal anime watchlist gallery</span>
+          </a>
+        </li>
+        <li>
+          <a class="works-item-link" href="https://www.behance.net/gallery/245378075/Konark26-Project" target="_blank" rel="noopener noreferrer">
+            <span class="works-item-title">Konark Experience</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Event graphics &amp; visual creatives</span>
+          </a>
+        </li>
+        <li>
+          <a class="works-item-link" href="#" target="_blank" rel="noopener noreferrer">
+            <span class="works-item-title">Just going with the flow</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Interactive ship &amp; river experiment</span>
+          </a>
+        </li>
+        <li>
+          <a class="works-item-link" href="https://trainwindow.vercel.app/" target="_blank" rel="noopener noreferrer">
+            <span class="works-item-title">Transit Window</span>
+            <span class="works-item-line" aria-hidden="true"></span>
+            <span class="works-item-desc">Cinematic train-window shader scene</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LIGHTWEIGHT ATMOSPHERE & TILED FILM GRAIN OVERLAY -->
+  <div class="atmosphere-overlay" aria-hidden="true">
+    <div class="window-warm-glow"></div>
+    <div class="window-night-glow"></div>
+    <div class="cinematic-vignette"></div>
+    <div id="grainLayer"></div>
+  </div>
+
+  <!-- TOP-RIGHT SUN / MOON CREAM LINE ICON TOGGLE (NO BOX) -->
+  <button id="dayNightToggleBtn" class="day-night-toggle" type="button" aria-label="Toggle Day / Night / Auto Mode" title="Mode: Auto (Click or press N to switch)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <g id="iconSun">
+        <circle cx="12" cy="12" r="4.2"/>
+        <line x1="12" y1="2.5" x2="12" y2="5.0"/>
+        <line x1="12" y1="19.0" x2="12" y2="21.5"/>
+        <line x1="4.22" y1="4.22" x2="5.98" y2="5.98"/>
+        <line x1="18.02" y1="18.02" x2="19.78" y2="19.78"/>
+        <line x1="2.5" y1="12" x2="5.0" y2="12"/>
+        <line x1="19.0" y1="12" x2="21.5" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.98" y2="18.02"/>
+        <line x1="18.02" y1="5.98" x2="19.78" y2="4.22"/>
+      </g>
+      <g id="iconMoon" style="display: none;">
+        <path d="M20.2 14.8A8.5 8.5 0 0 1 9.2 3.8a8.5 8.5 0 1 0 11 11z"/>
+      </g>
+      <circle id="iconAutoDot" class="auto-dot" cx="20.5" cy="3.5" r="1.4" fill="currentColor" stroke="none"/>
+    </svg>
+  </button>
+
+  <!-- UNOBTRUSIVE CORNER CONTROL PILL (Press 'D' to toggle debug readout) -->
+  <div class="corner-ui" role="region" aria-label="Delhi Time">
+    <div id="sunOcclusionBadge" class="sun-hud-badge">--sun: 1.00 | ON</div>
+    <div id="delhiClock" class="ist-clock" title="New Delhi, India (IST)">--:-- -- IST</div>
+  </div>
+
+  
+  
+  <script src="script.js"></script>
+</body>
+</html>

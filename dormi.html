@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dormi — PG &amp; Hostel Finder</title>
+  <style>
+    :root {
+      --bg: #ECE8F6;
+      --text: #171322;
+      --text-body: #302942;
+      --text-muted: #5A5170;
+      --text-faint: rgba(23, 19, 34, 0.48);
+      --border: rgba(23, 19, 34, 0.15);
+      --surface: rgba(23, 19, 34, 0.04);
+      --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body.is-night-theme {
+      --bg: #15121F;
+      --text: #EAE5F7;
+      --text-body: #C4BBD9;
+      --text-muted: #9488AE;
+      --text-faint: rgba(234, 229, 247, 0.45);
+      --border: rgba(234, 229, 247, 0.14);
+      --surface: rgba(234, 229, 247, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.35s ease, color 0.35s ease;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ======================================================================
+       TRAIN SCENE ATMOSPHERE SHADE (GLOW + VIGNETTE + FILM GRAIN)
+       ====================================================================== */
+    .atmosphere-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 30;
+      overflow: hidden;
+    }
+
+    .warm-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 62% 44% at 50% 8%,
+        rgba(186, 166, 236, 0.30) 0%,
+        rgba(170, 148, 226, 0.09) 55%,
+        rgba(23, 19, 34, 0) 100%
+      );
+      transition: opacity 0.4s ease;
+    }
+
+    body.is-night-theme .warm-glow {
+      background: radial-gradient(
+        ellipse 60% 42% at 50% 8%,
+        rgba(154, 128, 224, 0.17) 0%,
+        rgba(82, 62, 145, 0.05) 55%,
+        rgba(12, 10, 20, 0) 100%
+      );
+    }
+
+    .cinematic-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 82% 82% at 50% 50%,
+        rgba(23, 19, 34, 0) 60%,
+        rgba(23, 19, 34, 0.14) 100%
+      );
+    }
+
+    body.is-night-theme .cinematic-vignette {
+      background: radial-gradient(
+        ellipse 80% 80% at 50% 50%,
+        rgba(9, 7, 15, 0) 58%,
+        rgba(9, 7, 15, 0.48) 100%
+      );
+    }
+
+    #grainLayer {
+      position: absolute;
+      inset: 0;
+      opacity: 0.045;
+      background-repeat: repeat;
+      background-size: 128px 128px;
+    }
+
+    /* ======================================================================
+       TOP BAR
+       ====================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 20px 28px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .back-link {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease, transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-link:hover {
+      color: var(--text);
+      transform: translate3d(-2px, 0, 0);
+    }
+
+    .theme-toggle {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      color: var(--text);
+      transform: scale(1.06);
+    }
+
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      display: block;
+    }
+
+    /* ======================================================================
+       MAIN CONTENT
+       ====================================================================== */
+    .case-study {
+      position: relative;
+      z-index: 10;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 20px 28px 96px;
+    }
+
+    /* Simple Single-Line Minimalist Header */
+    .cs-title-line {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.4;
+    }
+
+    .cs-title-name {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .cs-title-rule {
+      flex: 1;
+      height: 1px;
+      min-width: 24px;
+      background-color: var(--border);
+    }
+
+    .cs-title-sub {
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Hero Image First */
+    .hero-frame {
+      width: 100%;
+      margin-bottom: 28px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .hero-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Metadata Strip Below Image */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 20px 0;
+      margin-bottom: 68px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    /* Sections */
+    .cs-section {
+      margin-bottom: 80px;
+    }
+
+    .section-index {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-heading {
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .section-copy {
+      font-size: 15px;
+      color: var(--text-body);
+      max-width: 640px;
+      line-height: 1.72;
+    }
+
+    /* Stats Row */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Problem & Solution Two-Column Split */
+    .two-col-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .two-col-split .section-heading {
+      font-size: 19px;
+    }
+
+    /* Visual Walkthrough (2-col -> Full -> 2-col) */
+    .walkthrough-intro {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    .step-row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .step-row-full {
+      margin-bottom: 56px;
+    }
+
+    .step-figure {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-img-wrap {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #FFFFFF;
+      margin-bottom: 16px;
+    }
+
+    .step-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .step-title {
+      font-family: var(--mono);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 580px;
+    }
+
+    /* Footer */
+    .cs-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      margin-top: 24px;
+    }
+
+    .footer-nav-link {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-nav-link:hover {
+      color: var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      .topbar {
+        padding: 16px 20px;
+      }
+      .case-study {
+        padding: 16px 20px 72px;
+      }
+      .cs-title-line {
+        flex-wrap: wrap;
+        gap: 4px 12px;
+      }
+      .cs-title-rule {
+        display: none;
+      }
+      .cs-title-sub {
+        width: 100%;
+        font-size: 12.5px;
+      }
+      .meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px 16px;
+      }
+      .stats-grid,
+      .two-col-split,
+      .step-row-two {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .cs-section {
+        margin-bottom: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TRAIN-MATCHED ATMOSPHERE SHADE -->
+  <div class="atmosphere-overlay" aria-hidden="true">
+    <div class="warm-glow"></div>
+    <div class="cinematic-vignette"></div>
+    <div id="grainLayer"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="back-link" href="index.html">&larr; back to train</a>
+    <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle Day / Night Theme" title="Switch theme (or press N)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <g id="iconSun">
+          <circle cx="12" cy="12" r="4.2"/>
+          <line x1="12" y1="2.5" x2="12" y2="5.0"/>
+          <line x1="12" y1="19.0" x2="12" y2="21.5"/>
+          <line x1="4.22" y1="4.22" x2="5.98" y2="5.98"/>
+          <line x1="18.02" y1="18.02" x2="19.78" y2="19.78"/>
+          <line x1="2.5" y1="12" x2="5.0" y2="12"/>
+          <line x1="19.0" y1="12" x2="21.5" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.98" y2="18.02"/>
+          <line x1="18.02" y1="5.98" x2="19.78" y2="4.22"/>
+        </g>
+        <g id="iconMoon" style="display: none;">
+          <path d="M20.2 14.8A8.5 8.5 0 0 1 9.2 3.8a8.5 8.5 0 1 0 11 11z"/>
+        </g>
+      </svg>
+    </button>
+  </header>
+
+  <main class="case-study">
+    <!-- SIMPLE SINGLE-LINE TITLE -->
+    <div class="cs-title-line">
+      <h1 class="cs-title-name">Dormi</h1>
+      <span class="cs-title-rule" aria-hidden="true"></span>
+      <span class="cs-title-sub">PG &amp; Hostel Finder</span>
+    </div>
+
+    <!-- HERO IMAGE ON TOP -->
+    <div class="hero-frame">
+      <img src="images/dormi.png" alt="Dormi PG and hostel finder app preview" />
+    </div>
+
+    <!-- ROLE / TIMELINE / TOOLS / DELIVERABLES BELOW IMAGE -->
+    <div class="meta-grid">
+      <div>
+        <div class="meta-label">Role</div>
+        <div class="meta-value">UI/UX Designer</div>
+      </div>
+      <div>
+        <div class="meta-label">Timeline</div>
+        <div class="meta-value">Summer 2026</div>
+      </div>
+      <div>
+        <div class="meta-label">Tools</div>
+        <div class="meta-value">Figma</div>
+      </div>
+      <div>
+        <div class="meta-label">Deliverables</div>
+        <div class="meta-value">Mobile UI, Design System</div>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section class="cs-section">
+      <span class="section-index">Overview</span>
+      <h2 class="section-heading">Finding a safe stay near campus, made simple.</h2>
+      <p class="section-copy">
+        Dormi is a PG and hostel finder built for students who move to a new city and need a place to live near campus. It replaces broker calls and unverified listings with clear filters, honest photos, and transparent rent details.
+      </p>
+
+      <div class="stats-grid">
+        <div>
+          <div class="stat-num">Verified</div>
+          <p class="stat-desc">Every listing shows real photos and clear house rules.</p>
+        </div>
+        <div>
+          <div class="stat-num">Mapped</div>
+          <p class="stat-desc">Every stay shown with its walking distance to campus.</p>
+        </div>
+        <div>
+          <div class="stat-num">Compared</div>
+          <p class="stat-desc">Rent, food and facilities side by side.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM & SOLUTION -->
+    <section class="cs-section">
+      <div class="two-col-split">
+        <div>
+          <span class="section-index">The Problem</span>
+          <h2 class="section-heading">Scattered listings &amp; unverified stays</h2>
+          <p class="section-copy">
+            Students arriving in a new city depend on brokers, word of mouth, and social media groups to find a PG or hostel. Listings are often outdated, photos don't match reality, and rent, deposits and house rules aren't clear until it's too late.
+          </p>
+        </div>
+        <div>
+          <span class="section-index">The Solution</span>
+          <h2 class="section-heading">One place to search, compare &amp; shortlist</h2>
+          <p class="section-copy">
+            A student-first finder with filters for budget, distance and facilities, detailed listing pages with real photos and house rules, and a simple shortlist to compare stays side by side.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW WE SOLVED IT -->
+    <section class="cs-section">
+      <span class="section-index">How We Solved It</span>
+      <p class="walkthrough-intro">A visual walkthrough of the product experience.</p>
+
+      <!-- Steps 01 & 02 -->
+      <div class="step-row-two">
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/dormi1.png" alt="Step 01 Quick Search and Filters" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">01. Quick Search &amp; Filters</div>
+            <p class="step-desc">Search by area, budget, room type and distance from campus in just a few taps.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/dormi2.png" alt="Step 02 Map and Discovery" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">02. Room, at a Glance</div>
+            <p class="step-desc">Every room card shows what matters most: a real photo, the price, and the walk to the gate.</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Step 03 -->
+      <div class="step-row-full">
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/dormi3.png" alt="Step 03 Detailed Listing Page" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">03. Detailed Listing Page</div>
+            <p class="step-desc">Real photos, rent, deposit, food, rules and facilities laid out clearly in one scroll.</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Steps 04 & 05 -->
+      <div class="step-row-two" style="margin-bottom: 0;">
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/dormi4.png" alt="Step 04 Shortlist and Compare" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">04. Shortlist &amp; Compare</div>
+            <p class="step-desc">Save favorites and compare rent, facilities and distance side by side.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="step-figure">
+          <div class="step-img-wrap">
+            <img src="images/dormi5.png" alt="Step 05 Trust-First Design System" loading="lazy" />
+          </div>
+          <figcaption>
+            <div class="step-title">05. Trust-First Design System</div>
+            <p class="step-desc">A clean, friendly visual system with clear typography and calm colors, built to feel safe for first-time renters.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- TAKEAWAY -->
+    <section class="cs-section">
+      <span class="section-index">Takeaway</span>
+      <h2 class="section-heading">Designing for trust.</h2>
+      <p class="section-copy">
+        Dormi taught me that when someone is choosing a place to live, design has to build trust before it builds delight. Clear information, honest visuals and no surprises matter more than anything flashy.
+      </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="cs-footer">
+      <a class="footer-nav-link" href="index.html">&larr; back to train</a>
+      <a class="footer-nav-link" href="velo.html">Next: Velo &rarr;</a>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const THEME_STORAGE_KEY = 'train-theme-mode';
+      const btn = document.getElementById('themeToggleBtn');
+      const iconSun = document.getElementById('iconSun');
+      const iconMoon = document.getElementById('iconMoon');
+
+      function isNightByClock() {
+        const h = new Date().getHours();
+        return h >= 18 || h < 6;
+      }
+
+      function getSavedTheme() {
+        try { return localStorage.getItem(THEME_STORAGE_KEY); } catch (_) { return null; }
+      }
+
+      function saveTheme(night) {
+        try { localStorage.setItem(THEME_STORAGE_KEY, night ? 'night' : 'day'); } catch (_) {}
+      }
+
+      const saved = getSavedTheme();
+      let isNight = saved === 'night' ? true : saved === 'day' ? false : isNightByClock();
+
+      function applyTheme() {
+        document.body.classList.toggle('is-night-theme', isNight);
+        iconSun.style.display = isNight ? 'none' : 'block';
+        iconMoon.style.display = isNight ? 'block' : 'none';
+      }
+
+      function toggleTheme() {
+        isNight = !isNight;
+        saveTheme(isNight);
+        applyTheme();
+      }
+
+      btn.addEventListener('click', toggleTheme);
+
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'n' || e.key === 'N') {
+          toggleTheme();
+        }
+      });
+
+      applyTheme();
+
+      // Lightweight static 128x128 film grain matching the main train scene
+      const grainLayer = document.getElementById('grainLayer');
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = 128;
+      offCanvas.height = 128;
+      const ctx = offCanvas.getContext('2d');
+      if (ctx && grainLayer) {
+        const imgData = ctx.createImageData(128, 128);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const v = (Math.random() * 255) | 0;
+          data[i] = v;
+          data[i + 1] = v;
+          data[i + 2] = v;
+          data[i + 3] = 255;
+        }
+        ctx.putImageData(imgData, 0, 0);
+        grainLayer.style.backgroundImage = `url(${offCanvas.toDataURL()})`;
+      }
+    })();
+  </script>
+</body>
+</html>
