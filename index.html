@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sanju | Product Designer</title>
+  <title>Golden Hour Commuter Train — Animated Vector Scene</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="audio.js" defer></script>
 </head>
 <body data-speed="slow">
 
@@ -640,15 +641,46 @@
                   <use href="#tile-4-rooftops-guardrail" x="1400" y="0"/>
                 </g>
 
+                <g id="ext-layer-5-poles-wires">
+                  <use href="#tile-5-poles-wires" x="-200" y="0"/>
+                  <use href="#tile-5-poles-wires" x="1400" y="0"/>
+                </g>
+
+                <g id="side-projects-poster" class="train-wanted-poster" role="button" tabindex="0" aria-label="Open Side Projects section">
+                  <rect x="1096" y="328" width="114" height="138" rx="8" fill="#000000" fill-opacity="0" style="pointer-events: all; cursor: pointer;"/>
+                  <clipPath id="wantedPosterClip">
+                    <rect x="1102" y="334" width="102" height="126" rx="6" />
+                  </clipPath>
+
+                  <g id="wanted-poster-sheet">
+                    <g clip-path="url(#wantedPosterClip)">
+                      <image
+                        href="images/wantedposter.png"
+                        x="1102"
+                        y="334"
+                        width="102"
+                        height="126"
+                        preserveAspectRatio="xMidYMid slice"
+                      />
+                      <rect id="poster-day-warm-glow" x="1102" y="334" width="102" height="126" fill="#FFE3A8"/>
+                      <rect class="decal-night-tint" x="1102" y="334" width="102" height="126" fill="#111628"/>
+                    </g>
+                  </g>
+
+                  <svg class="wanted-stamp" x="1111" y="403" width="84" height="45.6" viewBox="0 0 140 76">
+                    <g transform="rotate(-5 70 38)" opacity="0.93">
+                      <rect x="4" y="7" width="132" height="62" rx="2" fill="none" stroke="#9A3B30" stroke-width="2" />
+                      <rect class="stamp-ink" x="8.5" y="11.5" width="123" height="53" rx="1" fill="#9A3B30" />
+                      <text class="stamp-text" x="70" y="34" text-anchor="middle" fill="#EFE2C6" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18.5" font-weight="800" letter-spacing="4.5">SIDE</text>
+                      <text class="stamp-text" x="70" y="54.5" text-anchor="middle" fill="#EFE2C6" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" letter-spacing="1.6">PROJECTS</text>
+                    </g>
+                  </svg>
+                </g>
+
                 <g id="window-light-shafts">
                   <polygon points="495,220 690,220 610,580 415,580" fill="url(#windowShaftSoftGrad)"/>
                   <polygon points="680,220 910,220 830,580 600,580" fill="url(#windowShaftSoftGrad)"/>
                   <polygon points="905,220 1050,220 970,580 825,580" fill="url(#windowShaftSoftGrad)" opacity="0.72"/>
-                </g>
-
-                <g id="ext-layer-5-poles-wires">
-                  <use href="#tile-5-poles-wires" x="-200" y="0"/>
-                  <use href="#tile-5-poles-wires" x="1400" y="0"/>
                 </g>
 
                 <rect id="main-sky-shade-overlay" x="452" y="224" width="770" height="354" fill="#2A364B"/>
@@ -861,45 +893,6 @@
 
 
 
-              <!-- Interactive Wanted Poster Decal ("Side Projects" Trigger) -->
-              <g id="blue-window-decal"
-                 role="button"
-                 tabindex="0"
-                 aria-label="Open Side Projects section">
-                <!-- Transparent hit-box so the entire poster area is clickable -->
-                <rect x="1096" y="328" width="114" height="138" rx="8" fill="#000000" fill-opacity="0" style="pointer-events: all; cursor: pointer;"/>
-
-                <clipPath id="wantedPosterClip">
-                  <rect x="1102" y="334" width="102" height="126" rx="6" />
-                </clipPath>
-
-                <g id="wanted-poster-sheet">
-                  <g clip-path="url(#wantedPosterClip)">
-                    <image
-                      href="images/wantedposter.png"
-                      x="1102"
-                      y="334"
-                      width="102"
-                      height="126"
-                      preserveAspectRatio="xMidYMid slice"
-                    />
-                    <!-- Faint warm daylight glow on the poster paper -->
-                    <rect id="poster-day-warm-glow" x="1102" y="334" width="102" height="126" fill="#FFE3A8"/>
-                    <!-- Night dimming & blue-brown tint matching the rest of the carriage -->
-                    <rect class="decal-night-tint" x="1102" y="334" width="102" height="126" fill="#111628"/>
-                  </g>
-                  <!-- Subtle warm hover glow around the poster edge -->
-                  <rect id="wanted-poster-glow" x="1100" y="332" width="106" height="130" rx="7" fill="none" stroke="#F5E6CE" stroke-width="2.2"/>
-                </g>
-
-                <!-- Small "Side Projects" tooltip above the poster -->
-                <g id="wanted-poster-tooltip">
-                  <text x="1153" y="322" text-anchor="middle">Side Projects</text>
-                </g>
-              </g>
-
-
-
               <!-- Akatsuki / Orange Sticker Decal with Matching Day/Night Tint -->
               <g id="small-window-sticker">
                 <clipPath id="orangeStickerClip">
@@ -930,14 +923,7 @@
                 <circle cx="265" cy="352" r="2" fill="#D46A5E"/>
               </g>
 
-              <g id="route-map-panel"
-                 role="button"
-                 tabindex="0"
-                 aria-label="Open Work section"
-                 style="cursor: pointer; pointer-events: bounding-box;">
-                <!-- Transparent hit-target rect so every pixel of the panel is 100% clickable -->
-                <rect x="290" y="278" width="154" height="146" rx="8" fill="#000000" fill-opacity="0" style="pointer-events: all; cursor: pointer;"/>
-
+              <g id="route-map-panel">
                 <rect x="292" y="280" width="150" height="142" rx="6" fill="#7D6B57" stroke="#2D2218" stroke-width="3"/>
                 <rect x="297" y="286" width="140" height="128" rx="4" fill="#9E8970"/>
                 <rect x="303" y="292" width="128" height="114" rx="4" fill="#233038"/>
@@ -955,14 +941,6 @@
                 <circle cx="412" cy="354" r="3.5" fill="#962B20"/>
                 <circle cx="422" cy="368" r="3.5" fill="#962B20"/>
                 <circle cx="416" cy="388" r="4" fill="#962B20"/>
-
-                <!-- Subtle warm hover glow around the panel frame (drawn on top of the panel) -->
-                <rect id="route-map-glow" x="290" y="278" width="154" height="146" rx="8" fill="none" stroke="#F5E6CE" stroke-width="2.5"/>
-
-                <!-- Small "Work" tooltip above the panel -->
-                <g id="route-map-tooltip">
-                  <text x="367" y="268" text-anchor="middle">Work</text>
-                </g>
               </g>
 
               <g id="right-wall-stickers">
@@ -1111,13 +1089,14 @@
 
               
               <!-- INTERACTIVE BLACK CAT SITTING ON BENCH -->
-              <g id="black-cat" transform="translate(822, 660)" role="button" tabindex="0" aria-label="About Sanju">
-                <rect x="-10" y="-18" width="194" height="118" fill="transparent"/>
+              <g id="about-cat" class="train-about-cat" role="button" tabindex="0" aria-label="About Sanju">
+                <g id="black-cat" transform="translate(822, 660)">
+                  <rect x="-10" y="-18" width="194" height="118" fill="transparent"/>
 
-                <ellipse cx="84" cy="86.5" rx="88" ry="9.5" fill="#07100E" opacity="0.38"/>
-                <path opacity="0.78" d="M84 95C130.392 95 168 90.9706 168 86C168 81.0294 130.392 77 84 77C37.6081 77 0 81.0294 0 86C0 90.9706 37.6081 95 84 95Z" fill="#0A1412"/>
+                  <ellipse cx="84" cy="86.5" rx="88" ry="9.5" fill="#07100E" opacity="0.38"/>
+                  <path opacity="0.78" d="M84 95C130.392 95 168 90.9706 168 86C168 81.0294 130.392 77 84 77C37.6081 77 0 81.0294 0 86C0 90.9706 37.6081 95 84 95Z" fill="#0A1412"/>
 
-                <g id="cat-figure-wrap">
+                <g id="cat-figure-wrap" class="cat-body">
                   <g id="cat-breathe-group">
                     <path id="cat-hover-glow-rim" d="M2.00014 66C-1.99986 46 16.0001 24 44.0001 20C66.0001 17 90.0001 26 112 32C116 20 122 10 128 0L133 16C142 14 152 14 160 17L173 1C174 14 172 28 168 39C176 50 176 66 168 78C158 86 128 87 84.0001 87C36.0001 87 6.00014 82 2.00014 66Z" fill="none" stroke="#E8D5BC" stroke-width="2.6" stroke-linejoin="round"/>
 
@@ -1160,12 +1139,21 @@
                   </g>
                 </g>
 
-                <g id="cat-hover-bubble" class="cat-speech-bubble">
-                  <text x="112" y="-14" text-anchor="middle">About</text>
-                </g>
+                  <svg class="about-speech-tag" x="108" y="-41" width="84" height="40" viewBox="0 0 110 52" aria-hidden="true">
+                    <defs>
+                      <path id="cat-tag-shape" d="M 8 4 L 102 4 Q 106 4 106 8 L 106 34 Q 106 38 102 38 L 62 38 L 55 47 L 48 38 L 8 38 Q 4 38 4 34 L 4 8 Q 4 4 8 4 Z"/>
+                    </defs>
 
-                <g id="cat-psst-bubble" class="cat-speech-bubble">
-                  <text x="142" y="-14" text-anchor="middle">PSST...</text>
+                    <g class="speech-tag-inner">
+                      <use href="#cat-tag-shape" x="2" y="3" fill="#102523" opacity="0.38"/>
+                      <use href="#cat-tag-shape" fill="#DFCEAE"/>
+                      <text x="55" y="26.5" text-anchor="middle" fill="#241D18" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16.5" font-weight="700" letter-spacing="2.2">ABOUT</text>
+                    </g>
+                  </svg>
+
+                  <g id="cat-psst-bubble" class="cat-speech-bubble">
+                    <text x="142" y="-14" text-anchor="middle">PSST...</text>
+                  </g>
                 </g>
               </g>
             </g>
@@ -1462,6 +1450,22 @@
               <polygon points="490,885 805,885 685,1050 370,1050" fill="url(#streetSweepSoftGrad)"/>
             </g>
 
+            <svg id="work-panel" class="train-work-panel" x="290" y="278" width="154" height="146" viewBox="0 0 160 145" role="button" tabindex="0" aria-label="Open Work Projects">
+              <rect x="4" y="5" width="156" height="140" rx="5" fill="#1C1510" opacity="0.55" />
+              <rect class="panel-bezel" x="1" y="1" width="155" height="140" rx="5" fill="#8E8173" stroke="#2A2019" stroke-width="2" />
+              <rect class="panel-bevel" x="3" y="3" width="151" height="3" rx="1.5" fill="#A59888" opacity="0.65" />
+              <rect x="3" y="136" width="151" height="3" rx="1.5" fill="#685D52" opacity="0.7" />
+              <rect class="panel-face" x="11" y="11" width="135" height="120" rx="3" fill="#2A312F" stroke="#1E2322" stroke-width="1.5" />
+              <rect x="12" y="12" width="133" height="6" fill="#1A1F1E" opacity="0.55" />
+              <circle cx="6.5" cy="6.5" r="1.6" fill="#594F45" />
+              <circle cx="150.5" cy="6.5" r="1.6" fill="#594F45" />
+              <circle cx="6.5" cy="135.5" r="1.6" fill="#594F45" />
+              <circle cx="150.5" cy="135.5" r="1.6" fill="#594F45" />
+              <text class="panel-title" x="78.5" y="68" text-anchor="middle" fill="#D6C4A3" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="33" font-weight="700" letter-spacing="2.2">WORK</text>
+              <rect class="panel-bar" x="34" y="79" width="89" height="3.5" rx="1.5" fill="#B87A3D" />
+              <text class="panel-sub" x="78.5" y="105" text-anchor="middle" fill="#BCAE93" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="3.2">PROJECTS</text>
+            </svg>
+
           </g><!-- /#train-jolt-group -->
         </g><!-- /#train-micro-vibe-group -->
       </g><!-- /#train-slow-sway-group -->
@@ -1624,25 +1628,53 @@
   </div>
 
   <!-- TOP-RIGHT SUN / MOON CREAM LINE ICON TOGGLE (NO BOX) -->
-  <button id="dayNightToggleBtn" class="day-night-toggle" type="button" aria-label="Toggle Day / Night / Auto Mode" title="Mode: Auto (Click or press N to switch)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <g id="iconSun">
-        <circle cx="12" cy="12" r="4.2"/>
-        <line x1="12" y1="2.5" x2="12" y2="5.0"/>
-        <line x1="12" y1="19.0" x2="12" y2="21.5"/>
-        <line x1="4.22" y1="4.22" x2="5.98" y2="5.98"/>
-        <line x1="18.02" y1="18.02" x2="19.78" y2="19.78"/>
-        <line x1="2.5" y1="12" x2="5.0" y2="12"/>
-        <line x1="19.0" y1="12" x2="21.5" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.98" y2="18.02"/>
-        <line x1="18.02" y1="5.98" x2="19.78" y2="4.22"/>
-      </g>
-      <g id="iconMoon" style="display: none;">
-        <path d="M20.2 14.8A8.5 8.5 0 0 1 9.2 3.8a8.5 8.5 0 1 0 11 11z"/>
-      </g>
-      <circle id="iconAutoDot" class="auto-dot" cx="20.5" cy="3.5" r="1.4" fill="currentColor" stroke="none"/>
-    </svg>
-  </button>
+  <div class="top-controls">
+    <button
+      id="sound-toggle"
+      class="top-icon-btn"
+      type="button"
+      aria-pressed="true"
+      aria-label="Turn music off"
+      title="Music on/off"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M9 18V5l12-2v13" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="18" cy="16" r="3" />
+        <line class="mute-slash" x1="3" y1="3" x2="21" y2="21" />
+      </svg>
+    </button>
+
+    <button id="dayNightToggleBtn" class="day-night-toggle" type="button" aria-label="Toggle Day / Night / Auto Mode" title="Mode: Auto (Click or press N to switch)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <g id="iconSun">
+          <circle cx="12" cy="12" r="4.2"/>
+          <line x1="12" y1="2.5" x2="12" y2="5.0"/>
+          <line x1="12" y1="19.0" x2="12" y2="21.5"/>
+          <line x1="4.22" y1="4.22" x2="5.98" y2="5.98"/>
+          <line x1="18.02" y1="18.02" x2="19.78" y2="19.78"/>
+          <line x1="2.5" y1="12" x2="5.0" y2="12"/>
+          <line x1="19.0" y1="12" x2="21.5" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.98" y2="18.02"/>
+          <line x1="18.02" y1="5.98" x2="19.78" y2="4.22"/>
+        </g>
+        <g id="iconMoon" style="display: none;">
+          <path d="M20.2 14.8A8.5 8.5 0 0 1 9.2 3.8a8.5 8.5 0 1 0 11 11z"/>
+        </g>
+        <circle id="iconAutoDot" class="auto-dot" cx="20.5" cy="3.5" r="1.4" fill="currentColor" stroke="none"/>
+      </svg>
+    </button>
+  </div>
 
   <!-- UNOBTRUSIVE CORNER CONTROL PILL (Press 'D' to toggle debug readout) -->
   <div class="corner-ui" role="region" aria-label="Delhi Time">
@@ -1650,8 +1682,6 @@
     <div id="delhiClock" class="ist-clock" title="New Delhi, India (IST)">--:-- -- IST</div>
   </div>
 
-  
-  
   <script src="script.js"></script>
 </body>
 </html>
