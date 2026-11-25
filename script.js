@@ -706,10 +706,11 @@
       // 6. BLACK CAT MICRO-ANIMATIONS (EAR TWITCH, TAIL FLICK, SLOW BLINK) & WORKS
       // =========================================================================
       const blackCat = document.getElementById('black-cat');
+      const aboutCat = document.getElementById('about-cat');
       const worksBackdrop = document.getElementById('worksModalBackdrop');
       const worksCard = document.getElementById('worksModalCard');
       const worksCloseBtn = document.getElementById('worksCloseBtn');
-      const routeMapPanel = document.getElementById('route-map-panel');
+      const workPanel = document.getElementById('work-panel');
       const aboutBackdrop = document.getElementById('aboutModalBackdrop');
       const aboutCard = document.getElementById('aboutModalCard');
       const aboutCloseBtn = document.getElementById('aboutCloseBtn');
@@ -788,20 +789,20 @@
         blackCat.classList.add('tail-flick-active');
       }
 
-      blackCat.addEventListener('mouseenter', function () {
+      aboutCat.addEventListener('mouseenter', function () {
         isHoveringCat = true;
         clearPsstTimers();
         triggerCatBlink();
         triggerCatTailFlick();
       });
 
-      blackCat.addEventListener('mouseleave', function () {
+      aboutCat.addEventListener('mouseleave', function () {
         isHoveringCat = false;
         armIdlePsstTimer();
       });
 
       window.addEventListener('mouseover', function (e) {
-        if (blackCat.contains(e.target)) return;
+        if (aboutCat.contains(e.target)) return;
         if (!blackCat.classList.contains('psst-visible')) {
           armIdlePsstTimer();
         }
@@ -831,12 +832,12 @@
         armIdlePsstTimer();
       }
 
-      blackCat.addEventListener('click', function (e) {
+      aboutCat.addEventListener('click', function (e) {
         e.stopPropagation();
         openAboutOverlay();
       });
 
-      blackCat.addEventListener('keydown', function (e) {
+      aboutCat.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           openAboutOverlay();
@@ -857,15 +858,16 @@
         }
       });
 
-      if (routeMapPanel) {
-        routeMapPanel.addEventListener('click', function (e) {
+      if (workPanel) {
+        workPanel.addEventListener('click', function (e) {
           e.stopPropagation();
           openWorksOverlay();
         });
 
-        routeMapPanel.addEventListener('keydown', function (e) {
+        workPanel.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
+            e.stopPropagation();
             openWorksOverlay();
           }
         });
@@ -889,7 +891,7 @@
     // =========================================================================
 
 (function () {
-  const wantedPosterDecal = document.getElementById('blue-window-decal');
+  const sideProjectsPoster = document.getElementById('side-projects-poster');
   const spBackdrop        = document.getElementById('sideProjectsBackdrop');
   const spCard            = document.getElementById('sideProjectsCard');
   const spCloseBtn        = document.getElementById('sideProjectsCloseBtn');
@@ -906,23 +908,6 @@
     document.body.classList.remove('side-projects-open');
     spBackdrop.classList.remove('is-open');
   }
-
-  window.openSideProjectsFromPoster = function () {
-    if (!wantedPosterDecal) {
-      openSideProjectsOverlay();
-      return;
-    }
-    wantedPosterDecal.classList.remove('unfolding');
-    void wantedPosterDecal.offsetWidth;
-    wantedPosterDecal.classList.add('unfolding');
-
-    setTimeout(function () {
-      openSideProjectsOverlay();
-      setTimeout(function () {
-        wantedPosterDecal.classList.remove('unfolding');
-      }, 200);
-    }, 180);
-  };
 
   if (spCloseBtn) {
     spCloseBtn.addEventListener('click', closeSideProjectsOverlay);
@@ -942,16 +927,18 @@
     }
   });
 
-  if (wantedPosterDecal) {
-    wantedPosterDecal.addEventListener('click', function (e) {
+  if (sideProjectsPoster) {
+    function triggerSideProjects(e) {
       e.stopPropagation();
-      window.openSideProjectsFromPoster();
-    });
+      openSideProjectsOverlay();
+    }
 
-    wantedPosterDecal.addEventListener('keydown', function (e) {
+    sideProjectsPoster.addEventListener('click', triggerSideProjects);
+
+    sideProjectsPoster.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        window.openSideProjectsFromPoster();
+        triggerSideProjects(e);
       }
     });
   }
