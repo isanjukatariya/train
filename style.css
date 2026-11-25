@@ -67,6 +67,18 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    body {
+      transition: opacity 0.16s ease;
+    }
+
+    body.page-leaving {
+      opacity: 0;
+    }
+
+    body.page-entering {
+      opacity: 0;
+    }
+
     .viewport-stage {
       position: relative;
       width: 100vw;
@@ -195,6 +207,7 @@
     #main-sky-shade-overlay,
     #door-sky-shade-overlay {
       opacity: calc((1 - var(--sun)) * var(--day-ext) * 0.32);
+      pointer-events: none;
     }
 
     #interior-shade-overlay {
@@ -366,16 +379,39 @@
     }
 
     /* ==========================================================================
-       BLACK CAT SUBTLE ANIMATIONS, SUBTLE HOVER GLOW & PLAIN TEXT LABELS
+       BLACK CAT ANIMATIONS, SPEECH TAG HOVER & SUBTLE GLOW
        ========================================================================== */
     #black-cat {
       cursor: pointer;
       pointer-events: bounding-box;
+    }
+
+    .train-about-cat {
+      cursor: pointer;
       outline: none;
     }
 
-    #cat-figure-wrap {
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    .train-about-cat .speech-tag-inner {
+      transform-box: fill-box;
+      transform-origin: 50% 100%;
+      transition: transform 0.2s ease, filter 0.18s ease;
+    }
+
+    .train-about-cat .cat-body {
+      transform-box: fill-box;
+      transform-origin: 50% 90%;
+      transition: transform 0.2s ease;
+    }
+
+    .train-about-cat:hover .speech-tag-inner,
+    .train-about-cat:focus-visible .speech-tag-inner {
+      transform: translateY(-3px) scale(1.04);
+      filter: brightness(1.08);
+    }
+
+    .train-about-cat:hover .cat-body,
+    .train-about-cat:focus-visible .cat-body {
+      transform: translateY(-1.5px);
     }
 
     #cat-hover-glow-rim {
@@ -384,13 +420,8 @@
       pointer-events: none;
     }
 
-    #black-cat:hover #cat-figure-wrap,
-    #black-cat:focus-visible #cat-figure-wrap {
-      transform: translate3d(0px, -0.8px, 0px);
-    }
-
-    #black-cat:hover #cat-hover-glow-rim,
-    #black-cat:focus-visible #cat-hover-glow-rim {
+    .train-about-cat:hover #cat-hover-glow-rim,
+    .train-about-cat:focus-visible #cat-hover-glow-rim {
       opacity: 0.55;
     }
 
@@ -546,55 +577,88 @@
       font-size: 11px;
       letter-spacing: 0.04em;
     }
-    #black-cat:hover #cat-hover-bubble,
-    #black-cat:focus-visible #cat-hover-bubble,
-    #black-cat.hover-bubble-visible #cat-hover-bubble {
-      opacity: 0.88;
-      transform: translate3d(0px, 0px, 0px);
-    }
     #black-cat.psst-visible:not(:hover) #cat-psst-bubble {
       opacity: 0.78;
       transform: translate3d(0px, 0px, 0px);
     }
 
-   /* ==========================================================================
-       WALL INFO PANEL ("1336-25") HOVER GLOW & TOOLTIP
-       ========================================================================== */
-    #route-map-panel {
+    .train-work-panel {
       cursor: pointer;
       outline: none;
     }
 
-    #route-map-glow {
-      opacity: 0;
-      transition: opacity 0.28s ease;
-      pointer-events: none;
+    .train-work-panel .panel-face,
+    .train-work-panel .panel-title,
+    .train-work-panel .panel-sub,
+    .train-work-panel .panel-bar {
+      transition: fill 0.18s ease;
     }
 
-    #route-map-tooltip {
-      opacity: 0;
-      transform: translate3d(0px, 4px, 0px);
-      transition: opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
-      pointer-events: none;
+    .train-work-panel:hover .panel-face,
+    .train-work-panel:focus-visible .panel-face {
+      fill: #343D3A;
     }
 
-    #route-map-tooltip text {
-      fill: #E8D5BC;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 11px;
-      letter-spacing: 0.04em;
+    .train-work-panel:hover .panel-title,
+    .train-work-panel:focus-visible .panel-title {
+      fill: #EADBC0;
     }
 
-    #route-map-panel:hover #route-map-glow,
-    #route-map-panel:focus-visible #route-map-glow {
-      opacity: 0.65;
+    .train-work-panel:hover .panel-sub,
+    .train-work-panel:focus-visible .panel-sub {
+      fill: #D6C4A3;
     }
 
-    #route-map-panel:hover #route-map-tooltip,
-    #route-map-panel:focus-visible #route-map-tooltip {
-      opacity: 0.92;
-      transform: translate3d(0px, 0px, 0px);
+    .train-work-panel:hover .panel-bar,
+    .train-work-panel:focus-visible .panel-bar {
+      fill: #D4934E;
+    }
+
+    .train-work-panel:focus-visible {
+      outline: 2px solid #D6C4A3;
+      outline-offset: 2px;
+    }
+
+    body.is-night-theme .train-work-panel .panel-bezel {
+      fill: #4B4A4F;
+      stroke: #14151A;
+    }
+
+    body.is-night-theme .train-work-panel .panel-bevel {
+      fill: #696870;
+      opacity: 0.4;
+    }
+
+    body.is-night-theme .train-work-panel .panel-face {
+      fill: #1C2327;
+      stroke: #101518;
+    }
+
+    body.is-night-theme .train-work-panel .panel-title {
+      fill: #E6D3B1;
+    }
+
+    body.is-night-theme .train-work-panel .panel-sub {
+      fill: #B7A88E;
+    }
+
+    body.is-night-theme .train-work-panel .panel-bar {
+      fill: #C28240;
+    }
+
+    body.is-night-theme .train-work-panel:hover .panel-face,
+    body.is-night-theme .train-work-panel:focus-visible .panel-face {
+      fill: #252E33;
+    }
+
+    body.is-night-theme .train-work-panel:hover .panel-title,
+    body.is-night-theme .train-work-panel:focus-visible .panel-title {
+      fill: #F5E7CC;
+    }
+
+    body.is-night-theme .train-work-panel:hover .panel-bar,
+    body.is-night-theme .train-work-panel:focus-visible .panel-bar {
+      fill: #DD984F;
     }
 
     /* ==========================================================================
@@ -608,8 +672,9 @@
       filter: blur(8px) brightness(0.72);
     }
 
-    body.works-open .day-night-toggle,
-    body.works-open .corner-ui {
+    body.works-open .top-controls,
+    body.works-open .corner-ui,
+    body.works-open .day-night-toggle {
       opacity: 0.15;
       pointer-events: none;
     }
@@ -797,71 +862,23 @@
       }
     }
 
-    /* ==========================================================================
-       WANTED POSTER ("SIDE PROJECTS") HOVER PEEL, UNFOLD & TOOLTIP
-       ========================================================================== */
-    #blue-window-decal {
+    .train-wanted-poster {
       cursor: pointer;
       outline: none;
-      pointer-events: bounding-box;
-    }
-
-    #wanted-poster-sheet {
       transform-box: fill-box;
-      transform-origin: 50% 8%; /* Anchored near top tape so bottom peels up */
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-                  filter 0.32s ease;
-      will-change: transform;
+      transform-origin: 50% 6%;
+      transition: transform 0.22s ease, filter 0.2s ease;
     }
 
-    #wanted-poster-glow {
-      opacity: 0;
-      transition: opacity 0.28s ease;
-      pointer-events: none;
+    .train-wanted-poster:hover,
+    .train-wanted-poster:focus-visible {
+      transform: rotate(1.4deg) scale(1.025);
+      filter: brightness(1.09);
     }
 
-    #wanted-poster-tooltip {
-      opacity: 0;
-      transform: translate3d(0px, 4px, 0px);
-      transition: opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
-      pointer-events: none;
-    }
-
-    #wanted-poster-tooltip text {
-      fill: #E8D5BC;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-    }
-
-    /* Hover: slight lift, peel tilt, faint warm glow & tooltip */
-    #blue-window-decal:hover #wanted-poster-sheet,
-    #blue-window-decal:focus-visible #wanted-poster-sheet {
-      transform: translate3d(-2px, -4px, 0px) rotate(-3.5deg) scale(1.035);
-      filter: drop-shadow(3px 8px 10px rgba(14, 10, 7, 0.45));
-    }
-
-    #blue-window-decal:hover #wanted-poster-glow,
-    #blue-window-decal:focus-visible #wanted-poster-glow {
-      opacity: 0.65;
-    }
-
-    #blue-window-decal:hover #wanted-poster-tooltip,
-    #blue-window-decal:focus-visible #wanted-poster-tooltip {
-      opacity: 0.94;
-      transform: translate3d(0px, 0px, 0px);
-    }
-
-    /* Click: brief unfold animation toward the viewer */
-    @keyframes posterUnfoldTowardViewer {
-      0%   { transform: translate3d(-2px, -4px, 0px) rotate(-3.5deg) scale(1.035); }
-      45%  { transform: translate3d(-8px, -10px, 0px) rotate(1.5deg) scale(1.22); }
-      100% { transform: translate3d(0px, 0px, 0px) rotate(0deg) scale(1); }
-    }
-
-    #blue-window-decal.unfolding #wanted-poster-sheet {
-      animation: posterUnfoldTowardViewer 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    .train-wanted-poster:focus-visible .stamp-ink {
+      stroke: #EFE2C6;
+      stroke-width: 2;
     }
 
     /* Dim & blur scene when Side Projects is open (matching Works section) */
@@ -869,8 +886,9 @@
       filter: blur(8px) brightness(0.72);
     }
 
-    body.side-projects-open .day-night-toggle,
-    body.side-projects-open .corner-ui {
+    body.side-projects-open .top-controls,
+    body.side-projects-open .corner-ui,
+    body.side-projects-open .day-night-toggle {
       opacity: 0.15;
       pointer-events: none;
     }
@@ -1108,11 +1126,49 @@
     /* ==========================================================================
        TOP-RIGHT SUN / MOON CREAM LINE ICON TOGGLE & CORNER SPEED UI
        ========================================================================== */
-    .day-night-toggle {
+    .top-controls {
       position: fixed;
-      top: 18px;
+      top: 20px;
       right: 22px;
-      z-index: 60;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .top-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border: none;
+      background: transparent;
+      color: rgba(223, 206, 174, 0.82);
+      cursor: pointer;
+      transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .top-icon-btn:hover,
+    .top-icon-btn:focus-visible {
+      color: #f0e4cc;
+      transform: scale(1.06);
+      outline: none;
+    }
+
+    .top-icon-btn .mute-slash {
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+
+    .top-icon-btn.is-muted {
+      opacity: 0.45;
+    }
+
+    .top-icon-btn.is-muted .mute-slash {
+      opacity: 1;
+    }
+
+    .day-night-toggle {
       appearance: none;
       border: none;
       background: transparent;
@@ -1217,31 +1273,13 @@
       pointer-events: none !important;
     }
 
-    #blue-window-decal,
-    #blue-window-decal * {
+    .train-wanted-poster,
+    .train-wanted-poster * {
       pointer-events: all;
       cursor: pointer;
     }
 
-    /* Always show the text labels for Work, Side Projects, and Cat */
-    #route-map-tooltip,
-    #wanted-poster-tooltip,
-    #cat-hover-bubble {
-      opacity: 0.85;
-      transform: translate3d(0px, 0px, 0px);
-    }
-
-    /* Slightly brighten the text while the outline appears */
-    #route-map-panel:hover #route-map-tooltip,
-    #route-map-panel:focus-visible #route-map-tooltip,
-    #blue-window-decal:hover #wanted-poster-tooltip,
-    #blue-window-decal:focus-visible #wanted-poster-tooltip,
-    #black-cat:hover #cat-hover-bubble,
-    #black-cat:focus-visible #cat-hover-bubble {
-      opacity: 1;
-    }
-
-    /* Hide the idle "PSST..." text so it doesn't overlap the cat's permanent label */
+    /* Keep the idle "PSST..." text hidden so it doesn't overlap the speech tag */
     #cat-psst-bubble {
       display: none;
     }
@@ -1253,8 +1291,9 @@
       filter: blur(8px) brightness(0.72);
     }
 
-    body.about-open .day-night-toggle,
-    body.about-open .corner-ui {
+    body.about-open .top-controls,
+    body.about-open .corner-ui,
+    body.about-open .day-night-toggle {
       opacity: 0.15;
       pointer-events: none;
     }
